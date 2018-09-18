@@ -1,0 +1,29 @@
+<mat-card class="example-card">
+    <mat-card-header>
+
+      <mat-card-title>
+        <h1>Send invitations</h1>
+        <h4>Your workspace is ready to go. Know a few friends or coworkers who'd like to explore TLDM with
+          you?</h4>
+      </mat-card-title>
+    </mat-card-header>
+    <div class="InputContent">
+      <mat-card-content>
+        <form [formGroup]= "emailForm" class="example-form" (ngSubmit)= "onSubmit()">
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName= "EmailId" class="form-control" [ngClass]= "{ 'is-invalid': submitted && f.EmailId.errors }"
+              placeholder="Enter Email address" />
+            <div *ngIf= "submitted && f.EmailId.errors" class="invalid-feedback">
+              <div *ngIf= "f.EmailId.errors.required">Email is required</div>
+              <div *ngIf= "f.EmailId.errors.email">Email must be a valid email address</div>
+            </div>
+          </mat-form-field>
+          <mat-card-actions class="buttonCss">
+            <button mat-raised-button color="primary" >Send Invitation</button>
+            <button mat-raised-button color="primary" routerLink= "">Back to chat window</button>
+
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </div>
+  </mat-card>

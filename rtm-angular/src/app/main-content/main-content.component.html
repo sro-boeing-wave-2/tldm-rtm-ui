@@ -1,0 +1,184 @@
+<!-- <mat-sidenav-container class="main-container">
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar color="primary" class="side-toolbar">
+      <mat-toolbar-row class="user-workspace">
+        <span>{{workspaceName}}</span>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row class="user-details">
+        <span>{{emailId}}</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="side-sub-content">
+      <mat-nav-list td-sidenav-content>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader class="channel-heading">CHANNELS
+          <a>
+            <mat-icon class="add-channel-icon" (click)=Channel()>playlist_add</mat-icon>
+          </a>
+        </h3>
+
+        <div *ngIf="channelArray.length>0">
+          <div *ngFor="let channel of channelArray">
+            <a mat-list-item class="tc-white" (click)="getSelectedChannelDetails(channel)"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
+              {{channel.channelName}}</a>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+        <h3 mat-subheader class="channel-heading">Direct Messages
+        </h3>
+
+        <div *ngIf="allUsers.length>0">
+          <div *ngFor="let user of allUsers">
+            <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
+              {{user.firstName}} {{user.lastName}}</a>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+
+  <mat-sidenav-content class="sidenavContent">
+
+    <div>
+      <mat-toolbar style="background-color: rgb(63, 81, 181); color:aliceblue" class="content-toolbar">
+        <mat-toolbar-row class="channel-name">
+          <div class="channelname">
+            #{{channelName}}
+          </div>
+          <div>
+            <mat-icon class="add-member-icon" (click)="addMembersToChannel()" >person_add</mat-icon>
+          </div>
+          <div>
+            <button mat-button routerLink="/invite" >Invite to workspace</button>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+
+      <div cdkscrollable flex>
+        <mat-sidenav-container class="content-inner-container">
+          <mat-sidenav></mat-sidenav>
+          <mat-sidenav-content cdkscrollable class="message-content">
+            <mat-card class="message-card" #messagecard>
+              <div *ngIf="channelmessages.length > 0" class="messagelistcontainer">
+                <div class="pmd-card pmd-z-depth message-list">
+                  <ul class="list-group pmd-list pmd-card-list" *ngFor="let message of channelmessages">
+                    <li class="list-group-item">
+                      <div class="media-body" style="font-family: 'Roboto', sans-serif;">
+                        <h3 class="pmd-card-title-text">{{message?.messageId}}</h3>
+                        <span class="pmd-card-subtitle-text">{{message?.messageBody}} </span>
+                        <mat-divider></mat-divider>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card class="message-input-card">
+              <form class="message-form-input">
+                <mat-form-field>
+                  <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
+                    required>
+                </mat-form-field>
+                <button mat-button class="send-button" (click)="sendMessageInChannel()"> <mat-icon>send</mat-icon> </button>
+              </form>
+            </mat-card>
+          </mat-sidenav-content>
+        </mat-sidenav-container>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+<!-- ----------------Bootstrap version------------------------------- -->
+<div class="container-fluid">
+  <div class="col-sm-3 sidebar">
+    <div class="row-sm-6">
+      <nav class="navbar navbar-default nav-fixed-top side-navbar">
+        <div class="workspacename">{{workspaceName}}</div>
+        <div class="emailID">{{emailId}} </div>
+      </nav>
+      <h3 class="channel-heading">Channels
+        <a class="add-channel-icon">
+          <mat-icon (click)=Channel()>playlist_add</mat-icon>
+        </a>
+      </h3>
+
+      <div>
+          <ul class="list-group">
+            <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item" (click)="getSelectedChannelDetails(defaultChannel)">
+              {{defaultChannel.channelName}}
+            </li>
+          </ul>
+      </div>
+      <div *ngIf="channelArray.length>0">
+        <ul class="list-group">
+          <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
+          <li *ngFor="let channel of channelArray" class="list-group-item" (click)="getSelectedChannelDetails(channel)">
+            {{channel.channelName}}
+          </li>
+        </ul>
+      </div>
+      <h3 class="channel-heading">Direct Messages
+      </h3>
+
+      <div *ngIf="allUsers.length>0">
+        <!-- <ul *ngFor="let user of allUsers">
+            <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
+              {{user.firstName}} {{user.lastName}}</a>
+            </ul> -->
+        <ul class="list-group">
+          <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
+          <li *ngFor="let user of allUsers" class="list-group-item" (click)="getDirectMessageDetails(user)">{{user.firstName}} {{user.lastName}}</li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="col-sm-9 main-chat-container">
+    <div class="row-sm-6">
+      <nav class="navbar navbar-default nav-fixed-top chat-navbar">
+          <h3 class="channelname">
+              #{{channelName}}
+
+          </h3>
+          <div class="chat-navbar-links">
+            <!-- <mat-icon class="add-member-icon" (click)="addMembersToChannel()">person_add</mat-icon> -->
+            <button mat-button (click)="addMembersToChannel()">Add Member</button>
+            <button mat-button routerLink="/invite">Invite</button>
+          </div>
+        </nav>
+
+        <div class="message-container">
+          <div *ngIf="channelmessages.length > 0" >
+            <ul class="list-group">
+              <li *ngFor="let message of channelmessages" style="list-style-type:none" class="chat" [class.float-right] = "currentuser.firstName === message.sender['firstName']">
+                <div class="user-photo" ></div>
+                <!-- <div class="sender">{{message?.user.firstName}}</div> -->
+                <div class="chat-message">{{message?.messageBody}}</div>
+              </li>
+
+            </ul>
+          </div>
+
+
+        </div>
+
+        <form class="message-form-input">
+          <mat-form-field>
+            <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
+              required>
+          </mat-form-field>
+          <button mat-button class="send-button" (click)="sendMessageInChannel()"> <mat-icon>send</mat-icon> </button>
+        </form>
+    </div>
+
+  </div>
+</div>

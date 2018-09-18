@@ -1,0 +1,21 @@
+.example-card{
+  width: 500px;
+  height: 500px;
+  margin-left: 400px;
+  margin-top: 20px
+ }
+ .InputContent{
+  padding-top: 150px;
+  align-content: center;
+  width: 500px;
+  height: 500px;
+ }
+ .example-full-width{
+   width: 475px;
+   /* text-align: center; */
+   align-content: center;
+ }
+ .buttonCss{
+   align-items: center;
+   padding-left: 13px;
+ }
