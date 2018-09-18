@@ -212,22 +212,26 @@ export class MainContentComponent implements OnInit {
   workspaceName: string;
   channel: Channel;
   userid: string;
-  allUsers=[];
+  allUsers = [];
   //username: string;
   emailId: string;
   channelArray: Channel[];
   channelName: string;
-  currentuser:User;
+  currentuser: User;
   //directMessageChat: Channel[] = [];
-  channelSelected:Channel;
+  channelSelected: Channel;
   workspaceObject: Workspace;
   defaultChannels: Channel[];
+
+  // rahuls variable of online users
+  loggedInUsers: String[] = [];
+  //
   messageObject: Message = {
-    "messageId":"",
-    "messageBody":"",
-    "timestamp":"",
-    "isStarred":"",
-    "sender":{
+    "messageId": "",
+    "messageBody": "",
+    "timestamp": "",
+    "isStarred": "",
+    "sender": {
       "id": "",
       "emailId": "",
       "firstName": "",
@@ -251,7 +255,20 @@ export class MainContentComponent implements OnInit {
       .catch(err => console.error(err));
   }
   orderObj;
+
+  // rahuls code for online users
+  noofusers(): void {
+    // console.log("in no of users");
+    this._hubConnection
+      .invoke('SendToAllconnid', this.emailId)
+      .catch(err => console.error(err));
+  }
+  //
+
   ngOnInit() {
+    // rahuls code for online users
+    setInterval(() => this.noofusers(), 1000);
+    //
     this.route.queryParamMap.subscribe(params => {
       this.orderObj = { ...params.keys, ...params };
       // console.log(this.orderObj["params"]["email"]);
@@ -262,31 +279,29 @@ export class MainContentComponent implements OnInit {
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
 
     //get workspace object
-   this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
-   .subscribe(s => {
-     this.workspaceObject = s;
-     this.allUsers = s.users;
-     this.channelArray = s.channels;
-     this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
-     this.defaultChannels = s.defaultChannels;
-     //Instantiating chat context with the first default channel
-     this.getSelectedChannelDetails(this.defaultChannels[0]);
-     for(let channel of s.channels)
-     {
-       setTimeout(()=>this.joinChannel(channel.channelId),300) ;
-     }
-     for(let defaultChannel of s.defaultChannels)
-     {
-       setTimeout(()=>this.joinChannel(defaultChannel.channelId),300) ;
-     }
+    this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
+      .subscribe(s => {
+        this.workspaceObject = s;
+        this.allUsers = s.users;
+        this.channelArray = s.channels;
+        this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
+        this.defaultChannels = s.defaultChannels;
+        //Instantiating chat context with the first default channel
+        this.getSelectedChannelDetails(this.defaultChannels[0]);
+        for (let channel of s.channels) {
+          setTimeout(() => this.joinChannel(channel.channelId), 300);
+        }
+        for (let defaultChannel of s.defaultChannels) {
+          setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
+        }
 
-   });
-  console.log(this.workspaceObject);
- //this.allUsers = this.workspaceObject.users;
- //this.channelArray = this.workspaceObject.channels;
+      });
+    console.log(this.workspaceObject);
+    //this.allUsers = this.workspaceObject.users;
+    //this.channelArray = this.workspaceObject.channels;
 
     //Get list of users in the workspace
-   // this.getListOfUsersInWorkspace();
+    // this.getListOfUsersInWorkspace();
     // console.log(this.allUsers);
     //this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
     //console.log(currentUser);
@@ -322,8 +337,8 @@ export class MainContentComponent implements OnInit {
       this.channelmessages.push(receivedMessage);
       //const text = `${username}: ${receivedMessage}`;
       //this.channelmessages.push(text);
-      if(username != this.emailId){
-      this.notify();
+      if (username != this.emailId) {
+        this.notify();
       }
     });
     this._hubConnection
@@ -331,6 +346,15 @@ export class MainContentComponent implements OnInit {
       .then(() => { console.log('Connection started!') })
       .catch(err => console.log('Error while establishing connection :('));
     console.log(this._hubConnection);
+
+    // rahuls code for online users
+    this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
+      // console.log("in SendToAllconnid method");
+      // console.log(activeusers);
+      this.loggedInUsers = activeusers;
+      // console.log(this.loggedInUsers.includes(this.currentuser.emailId));
+    });
+    //
   }
   startChannelCommunication(): void {
     //console.log("in startChannelCommunication ");
@@ -360,7 +384,7 @@ export class MainContentComponent implements OnInit {
     //this.joinChannel(channel.channelId);
   }
 
-  getDirectMessageDetails(user:User){
+  getDirectMessageDetails(user: User) {
     this.chatservice.getOneToOneChannel(this.emailId, user.emailId, this.workspaceName)
       .subscribe(s => {
         this.channelSelected = s;
@@ -368,8 +392,8 @@ export class MainContentComponent implements OnInit {
         this.channelId = s.channelId;
       });
 
-      this.channelName =  user.firstName;
-      this.channelId = this.channelSelected.channelId;
+    this.channelName = user.firstName;
+    this.channelId = this.channelSelected.channelId;
   }
 
   // @Output()
@@ -379,7 +403,7 @@ export class MainContentComponent implements OnInit {
     this.router.navigate(['addChannel']);
     //this.currentUserEmail.emit(this.emailId);
   }
-  addMembersToChannel(){
+  addMembersToChannel() {
     this.chatservice.setChannelSelected(this.channelSelected);
     this.chatservice.setCurrentUser(this.currentuser);
     this.chatservice.setListOfUsers(this.allUsers);

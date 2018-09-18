@@ -133,8 +133,21 @@
               {{user.firstName}} {{user.lastName}}</a>
             </ul> -->
         <ul class="list-group">
+            <li class="list-group-item" (click)="getDirectMessageDetails(currentuser)">
+                <span class="online-icon">
+                    <i class="fas fa-circle"></i>
+                </span>
+                {{currentuser.firstName}} {{currentuser.lastName}} (You)
+              </li>
           <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-          <li *ngFor="let user of allUsers" class="list-group-item" (click)="getDirectMessageDetails(user)">{{user.firstName}} {{user.lastName}}</li>
+          <li *ngFor="let user of allUsers" class="list-group-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user" >
+
+            <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                <i class="fas fa-circle"></i>
+            </span>
+            <span *ngIf="currentuser != user">{{user.firstName}} {{user.lastName}}</span>
+
+          </li>
         </ul>
       </div>
     </div>
@@ -173,8 +186,7 @@
 
         <form class="message-form-input">
           <mat-form-field>
-            <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
-              required>
+            <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage">
           </mat-form-field>
           <button mat-button class="send-button" (click)="sendMessageInChannel()"> <mat-icon>send</mat-icon> </button>
         </form>
