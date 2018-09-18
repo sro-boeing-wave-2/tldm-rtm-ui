@@ -111,16 +111,16 @@
 
       <div>
           <ul class="list-group">
-            <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item" (click)="getSelectedChannelDetails(defaultChannel)">
-              {{defaultChannel.channelName}}
+            <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
+              #{{defaultChannel.channelName}}
             </li>
           </ul>
       </div>
       <div *ngIf="channelArray.length>0">
         <ul class="list-group">
           <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-          <li *ngFor="let channel of channelArray" class="list-group-item" (click)="getSelectedChannelDetails(channel)">
-            {{channel.channelName}}
+          <li *ngFor="let channel of channelArray" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
+            #{{channel.channelName}}
           </li>
         </ul>
       </div>
@@ -132,18 +132,21 @@
             <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
               {{user.firstName}} {{user.lastName}}</a>
             </ul> -->
-        <ul class="list-group">
-            <li class="list-group-item" (click)="getDirectMessageDetails(currentuser)">
+        <ul class="list-group user-list">
+            <li class="list-group-item user-list-item" (click)="getDirectMessageDetails(currentuser)">
                 <span class="online-icon">
-                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle" ></i>
                 </span>
                 {{currentuser.firstName}} {{currentuser.lastName}} (You)
               </li>
           <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-          <li *ngFor="let user of allUsers" class="list-group-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user" >
+          <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user" >
 
             <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
                 <i class="fas fa-circle"></i>
+            </span>
+            <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                <i class="fa fa-circle"></i>
             </span>
             <span *ngIf="currentuser != user">{{user.firstName}} {{user.lastName}}</span>
 

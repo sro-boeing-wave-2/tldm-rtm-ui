@@ -394,6 +394,7 @@ export class MainContentComponent implements OnInit {
 
     this.channelName = user.firstName;
     this.channelId = this.channelSelected.channelId;
+    setTimeout(()=>this.joinChannel(this.channelSelected.channelId),300) ;
   }
 
   // @Output()
