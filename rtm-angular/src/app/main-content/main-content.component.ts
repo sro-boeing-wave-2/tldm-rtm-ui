@@ -369,8 +369,6 @@ export class MainContentComponent implements OnInit {
       .subscribe(s => this.channelId = s.channelId);
   }
 
-
-
   getSelectedChannelDetails(channel: Channel) {
     console.log(this.workspaceObject);
 
@@ -411,6 +409,7 @@ export class MainContentComponent implements OnInit {
     this.router.navigate(['addChannel']);
     //this.currentUserEmail.emit(this.emailId);
   }
+
   addMembersToChannel() {
     this.chatservice.setChannelSelected(this.channelSelected);
     this.chatservice.setCurrentUser(this.currentuser);
