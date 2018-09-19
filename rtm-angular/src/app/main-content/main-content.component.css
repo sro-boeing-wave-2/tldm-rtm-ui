@@ -286,7 +286,7 @@ mat-sidenav{
 
 .logout:hover {
   text-decoration: none;
-  color: #888;
+  color: rgb(199, 35, 35);
 }
 
 .main-chat-container {
@@ -364,7 +364,8 @@ mat-form-field {
   align-items: flex-start;
   padding: 20px;
   margin: 20px;
-  background: #F1F1FB;
+  /* background: #F1F1FB; */
+  background: #D8DBE2;
   /* background: white; */
   border-radius: 10px;
   max-width: 600px;
@@ -373,7 +374,9 @@ mat-form-field {
 .chat .user-photo {
   width: 60px;
   height: 60px;
-  background: #FFE972;
+  background: url("../../assets/images/avatar.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   border-radius: 50%;
 }
 
@@ -394,11 +397,16 @@ mat-form-field {
   clear: both;
   float: left;
 }
+*/
 
 .float-right {
-  clear: both;
   float: right;
-} */
+}
+
+.sender-align {
+  background: rgb(252, 227, 233);
+  margin-left: 330px;
+}
 
 .fas:before{
   color:rgb(136, 223, 5);
