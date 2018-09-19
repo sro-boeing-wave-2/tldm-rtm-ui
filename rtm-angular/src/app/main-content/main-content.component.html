@@ -188,7 +188,7 @@
         <div *ngIf="channelmessages.length > 0">
           <ul class="list-group">
               <button type="button" class="btn btn-light" (click)="loadMoreMessages()">Load Previous Messages</button>
-            <li *ngFor="let message of channelmessages" style="list-style-type:none" class="chat" [class.float-right]="currentuser.firstName === message.sender['firstName']">
+            <li *ngFor="let message of channelmessages" style="list-style-type:none" class="chat">
               <div class="user-photo"></div>
               <div class="message-body">
                 <div class="sender">{{ message.sender.firstName }} </div>
@@ -196,11 +196,8 @@
                 <div class="chat-message">{{message?.messageBody}}</div>
               </div>
             </li>
-
           </ul>
         </div>
-
-
       </div>
 
       <form class="message-form-input">

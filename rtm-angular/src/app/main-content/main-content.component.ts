@@ -250,15 +250,17 @@ export class MainContentComponent implements OnInit {
       .catch(err => console.error(err));
   }
   public sendMessageInChannel(): void {
-    this.messageObject.messageBody = this.channelmessage;
-    this.messageObject.sender = this.currentuser;
-    this.messageObject.isStarred = "false";
-    this.messageObject.timestamp = new Date().toISOString();
-    this.messageObject.channelId = this.channelId;
-    this._hubConnection
-      .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId)
-      .then(() => this.channelmessage = '')
-      .catch(err => console.error(err));
+    if(this.channelmessage!= ""){
+      this.messageObject.messageBody = this.channelmessage;
+      this.messageObject.sender = this.currentuser;
+      this.messageObject.isStarred = "false";
+      this.messageObject.timestamp = new Date().toISOString();
+      this.messageObject.channelId = this.channelId;
+      this._hubConnection
+        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId)
+        .then(() => this.channelmessage = '')
+        .catch(err => console.error(err));
+    }
   }
   orderObj;
 
@@ -341,7 +343,7 @@ export class MainContentComponent implements OnInit {
     this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
       console.log("in sendtochannel method");
       console.log(receivedMessage);
-      this.channelmessages.push(receivedMessage);
+      if(receivedMessage.channelId == this.channelId){this.channelmessages.push(receivedMessage);}
       //const text = `${username}: ${receivedMessage}`;
       //this.channelmessages.push(text);
       if (username != this.emailId) {
