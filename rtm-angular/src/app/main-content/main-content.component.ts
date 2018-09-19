@@ -196,6 +196,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../User';
 import { Message } from '../Message';
 import { Observable } from 'rxjs';
+
 //import { EventEmitter } from 'protractor';
 @Component({
   selector: 'app-main-content',

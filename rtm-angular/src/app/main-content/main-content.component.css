@@ -205,13 +205,24 @@ mat-sidenav{
 }
 
 
+
 .sidebar-sub-container {
   /* overflow-y: hidden; */
   /* height: 100vh; */
   height: 90vh;
-  overflow-y: scroll;
 
 }
+
+.sidebar-sub-channel-container {
+  height: 50%;
+  overflow-y: scroll;
+}
+
+.sidebar-sub-direct-container {
+  height: 50%;
+  overflow-y: scroll;
+}
+
 
 .add-channel-icon {
   float: right;
@@ -250,6 +261,34 @@ mat-sidenav{
   font-size: 20px;
 }
 
+.workspacename:hover {
+  cursor: pointer;
+}
+
+.workspacename:hover .dropdown-content {
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+  z-index: 1;
+}
+
+.logout {
+  color: white;
+  font-weight: bolder
+}
+
+.logout:hover {
+  text-decoration: none;
+  color: #888;
+}
+
 .main-chat-container {
   font-family:  'Lato', sans-serif;
   height: 100vh;
@@ -267,7 +306,8 @@ mat-sidenav{
   float: left;
   margin: 0;
   padding: 10px;
-  align-self: center
+  align-self: center;
+  font-weight: bolder
 }
 
 .chat-navbar-links {
@@ -386,3 +426,47 @@ mat-form-field {
  .user-list-item:hover{
   background: rgb(36, 1, 49)
  }
+
+ ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media (min-width: 1200px) {
+
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+
+}

@@ -100,63 +100,69 @@
   <div class="col-sm-3 sidebar">
     <div class="row-sm-6">
       <nav class="navbar navbar-default nav-fixed-top side-navbar">
-        <div class="workspacename">{{workspaceName}} <a [href]="_loginHomeUrl">
-            <button type="button" class="logout btn btn-link">Log out</button>
-          </a></div>
+        <div class="workspacename">{{workspaceName}}
+          <div class="dropdown-content">
+            <a [href]="_loginHomeUrl" class="logout-button">
+              <button type="button" class="logout btn btn-link">Log out</button>
+            </a>
+          </div>
+        </div>
         <div class="emailID">{{emailId}} </div>
       </nav>
       <div class="sidebar-sub-container">
+        <div class="sidebar-sub-channel-container">
+          <h3 class="channel-heading">Channels
+            <a class="add-channel-icon">
+              <mat-icon (click)=Channel()>playlist_add</mat-icon>
+            </a>
+          </h3>
 
-        <h3 class="channel-heading">Channels
-          <a class="add-channel-icon">
-            <mat-icon (click)=Channel()>playlist_add</mat-icon>
-          </a>
-        </h3>
-
-        <div>
-          <ul class="list-group">
-            <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
-              #{{defaultChannel.channelName}}
-            </li>
-          </ul>
+          <div>
+            <ul class="list-group">
+              <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
+                #{{defaultChannel.channelName}}
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="channelArray.length>0">
+            <ul class="list-group">
+              <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
+              <li *ngFor="let channel of channelArray" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
+                #{{channel.channelName}}
+              </li>
+            </ul>
+          </div>
         </div>
-        <div *ngIf="channelArray.length>0">
-          <ul class="list-group">
-            <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-            <li *ngFor="let channel of channelArray" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
-              #{{channel.channelName}}
-            </li>
-          </ul>
-        </div>
-        <h3 class="channel-heading">Direct Messages
-        </h3>
 
-        <div *ngIf="allUsers.length>0">
-          <!-- <ul *ngFor="let user of allUsers">
-            <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
-              {{user.firstName}} {{user.lastName}}</a>
-            </ul> -->
-          <ul class="list-group user-list">
-            <li class="list-group-item user-list-item" (click)="getDirectMessageDetails(currentuser)">
-              <span class="online-icon">
-                <i class="fas fa-circle"></i>
-              </span>
-              {{currentuser.firstName}} {{currentuser.lastName}} (You)
-            </li>
-            <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-            <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
+        <div class="sidebar-sub-direct-container">
+          <h3 class="channel-heading">Direct Messages
+          </h3>
 
-              <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
-                <i class="fas fa-circle"></i>
-              </span>
-              <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
-                <i class="fa fa-circle"></i>
-              </span>
-              <span *ngIf="currentuser != user">{{user.firstName}} {{user.lastName}}</span>
+          <div *ngIf="allUsers.length>0">
+            <!-- <ul *ngFor="let user of allUsers">
+                  <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
+                    {{user.firstName}} {{user.lastName}}</a>
+                  </ul> -->
+            <ul class="list-group user-list">
+              <li class="list-group-item user-list-item" (click)="getDirectMessageDetails(currentuser)">
+                <span class="online-icon">
+                  <i class="fas fa-circle"></i>
+                </span>
+                {{currentuser.firstName}} {{currentuser.lastName}} (You)
+              </li>
+              <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
+              <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
 
-            </li>
-          </ul>
-
+                <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                  <i class="fas fa-circle"></i>
+                </span>
+                <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                  <i class="fa fa-circle"></i>
+                </span>
+                <span *ngIf="currentuser != user">{{user.firstName}} {{user.lastName}}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -178,9 +184,9 @@
         </div>
       </nav>
 
-      <div class="message-container" id="messageDiv">
+      <div class="message-container" id="messageDiv" ngx-auto-scroll lock-y-offset="10">
         <div *ngIf="channelmessages.length > 0">
-          <ul class="list-group" >
+          <ul class="list-group">
             <li *ngFor="let message of channelmessages" style="list-style-type:none" class="chat" [class.float-right]="currentuser.firstName === message.sender['firstName']">
               <div class="user-photo"></div>
               <div class="message-body">
