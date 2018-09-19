@@ -223,7 +223,7 @@ export class MainContentComponent implements OnInit {
   channelSelected: Channel;
   workspaceObject: Workspace;
   defaultChannels: Channel[];
-
+  numberOfMessages:number;
   // rahuls variable of online users
   loggedInUsers: String[] = [];
   //
@@ -418,6 +418,21 @@ export class MainContentComponent implements OnInit {
     //console.log(this.allUsers);
     this.router.navigate(['addMembersToChannel']);
   }
+
+  loadMoreMessages(){
+    var loadedMessages = [];
+    this.numberOfMessages = this.channelmessages.length + 10;
+    this.chatservice.loadMoreMessages(this.channelId, this.numberOfMessages).subscribe(s => {
+      loadedMessages = s;
+      loadedMessages.reverse()
+      for(let i of loadedMessages){
+        this.channelmessages.unshift(i);
+      }
+    });
+    setTimeout(()=>console.log(loadedMessages),500);
+    //this.channelmessages.unshift(loadedMessages)
+  }
+
   public notify() {
     let audio = new Audio();
     audio.src = "../assets/sounds/unconvinced.mp3";

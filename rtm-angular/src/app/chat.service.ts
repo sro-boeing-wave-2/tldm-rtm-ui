@@ -138,6 +138,13 @@ export class ChatService {
     )
   }
 
+  loadMoreMessages(channelid:string, N:number):Observable<Message[]>{
+    const url = `${this._chaturl + "/channel/messages"}/${channelid}/${N}`;
+    console.log(url);
+    return this.http.get(url).pipe(
+      catchError(this.handleError<any>('loadMoreMessages'))
+    )
+  }
   /*============================================================== */
   sendInviteMail(email: any) {
     console.log(email);
