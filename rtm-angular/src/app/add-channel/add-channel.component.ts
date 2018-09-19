@@ -212,7 +212,8 @@ export class AddChannelComponent implements OnInit {
     this.channelToCreate.admin.lastName = this.currentUser.lastName;
     this.channelToCreate.admin.userId = this.currentUser.userId;
     this.chatService.createNewChannel(this.channelToCreate, this.currentWorkspace).subscribe();
-    this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}});
+    setTimeout(()=>this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}}),300);
+    // this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}});
     //console.log(this.channelToCreate);
   }
   // private _filter(value: User): User[] {

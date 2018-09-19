@@ -226,6 +226,9 @@ export class MainContentComponent implements OnInit {
   // rahuls variable of online users
   loggedInUsers: String[] = [];
   //
+
+  _loginHomeUrl: string ="http://172.23.238.244:4200";
+
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -266,6 +269,7 @@ export class MainContentComponent implements OnInit {
   //
 
   ngOnInit() {
+    console.log("ng onit");
     // rahuls code for online users
     setInterval(() => this.noofusers(), 1000);
     //

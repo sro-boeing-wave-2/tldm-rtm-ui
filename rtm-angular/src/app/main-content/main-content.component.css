@@ -177,8 +177,16 @@ mat-sidenav{
 
 /* bootstrap version */
 
-.container-fluid, .sidebar {
+.container-fluid {
   padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: #320E3B;
+  padding: 0;
+
 }
 
 .side-navbar {
@@ -187,13 +195,22 @@ mat-sidenav{
   border-bottom: 1px;
   text-align: center;
   border-radius: 0px;
-  height: 20%;
   padding: 0;
   margin: 0;
   /* color: white; */
   font-weight: bold;
   text-shadow: 2px;
+  height: 10vh;
  /* background-image: url("../../assets/images/10ed38490b10d9d6e21aa5eb8518e8db--freedom.jpg"); */
+}
+
+
+.sidebar-sub-container {
+  /* overflow-y: hidden; */
+  /* height: 100vh; */
+  height: 90vh;
+  overflow-y: scroll;
+
 }
 
 .add-channel-icon {
@@ -216,7 +233,6 @@ mat-sidenav{
 }
 
 .chat-navbar {
-
   font-family:  'Lato', sans-serif;
   text-align: center;
   border-radius: 0px;
@@ -230,17 +246,11 @@ mat-sidenav{
   font-size: 20px;
 }
 
-.sidebar , .main-chat-container {
-
+.main-chat-container {
   font-family:  'Lato', sans-serif;
-  height: -webkit-fill-available;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden
-}
-
-.sidebar {
-  background: #320E3B;
 }
 
 
@@ -249,7 +259,6 @@ mat-sidenav{
 }
 
 .channelname {
-
   font-family:  'Lato', sans-serif;
   float: left;
   margin: 0;
@@ -263,15 +272,15 @@ mat-sidenav{
 }
 
 .message-form-input {
-  border: 5px;
-  border: black;
+  outline: #320E3B;
   font-family:  'Lato', sans-serif;
   position: fixed;
   bottom: 0;
   width: 100%;
   align-items: center;
   overflow: hidden;
-  color: black
+  color: black;
+  padding-left: 20px;
 }
 
 mat-form-field {
@@ -288,8 +297,12 @@ mat-form-field {
   width: -webkit-fill-available;
   overflow-y: scroll;
   overflow-x: hidden;
-  position: fixed;
+  position: absolute;
   /* position: fixed; */
+}
+
+.message-body {
+  width: 80%;
 }
 
 .chat {
@@ -311,6 +324,11 @@ mat-form-field {
   height: 60px;
   background: #FFE972;
   border-radius: 50%;
+}
+
+.sender {
+  padding-left: 30px;
+  font-weight: bolder;
 }
 
 .chat .chat-message {
@@ -350,5 +368,10 @@ mat-form-field {
  .user-list-item {
    background: #320E3B;
    color: white;
-   border: 0
+   border: 0;
+   cursor: pointer;
+ }
+
+ .user-list-item:hover{
+  background: rgb(36, 1, 49)
  }

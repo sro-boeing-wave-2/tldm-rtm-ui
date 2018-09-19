@@ -13,31 +13,38 @@ export class InviteMembersComponent implements OnInit {
 
   emailForm: FormGroup;
   submitted = false;
-  workspace : string;
+  workspace: string;
+  currentEmail: string;
+  currentWorkspace: string;
 
-  constructor(private inviteservice: ChatService, private router: Router, private form : FormBuilder) { }
+  constructor(private inviteservice: ChatService,
+    private router: Router,
+    private form: FormBuilder,
+    private chatService: ChatService) { }
 
   ngOnInit() {
-      this.inviteservice.currentWorkspace .subscribe(workspace => this.workspace = workspace)
+    this.chatService.currentEmailId.subscribe(email => this.currentEmail = email);
+    this.chatService.currentWorkspace.subscribe(workspace => this.currentWorkspace = workspace);
+    this.inviteservice.currentWorkspace.subscribe(workspace => this.workspace = workspace)
     // .subscribe(workspace => this.workspace = workspace)
     this.emailForm = this.form.group({
       EmailId: ['', [Validators.required, Validators.email]],
     })
-     }
-     get f() { return this.emailForm.controls; }
+  }
+  get f() { return this.emailForm.controls; }
 
-     onSubmit() {
-      this.submitted = true;
+  onSubmit() {
+    this.submitted = true;
 
-      // stop here if form is invalid
-      if (this.emailForm.invalid) {
-          return;
-      }
-      else{
-        this.PostToGmail();
-        // this.newMessage();
+    // stop here if form is invalid
+    if (this.emailForm.invalid) {
+      return;
+    }
+    else {
+      this.PostToGmail();
+      // this.newMessage();
 
-      }
+    }
 
 
   }
@@ -46,8 +53,12 @@ export class InviteMembersComponent implements OnInit {
     console.log("Open Gmail");
     var Email = {
       "emailId": this.emailForm.value.EmailId,
-      "workspace" : this.workspace
-    };    this.inviteservice.sendInviteMail(Email).subscribe(data => console.log('success'), err => console.log(err));
+      "workspace": this.workspace
+    }; this.inviteservice.sendInviteMail(Email).subscribe(data => console.log('success'), err => console.log(err));
+  }
+
+  backToChatWindow() {
+    this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace } });
   }
 
   // newMessage() {
@@ -55,6 +66,6 @@ export class InviteMembersComponent implements OnInit {
   //   this.inviteservice.showEmailId(this.emailForm.value.EmailId);
   // }
 
-  }
+}
 
 
