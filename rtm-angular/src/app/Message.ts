@@ -6,4 +6,5 @@ export class Message{
   timestamp:string;
   isStarred:string;
   sender:User;
+  channelId: string
  }

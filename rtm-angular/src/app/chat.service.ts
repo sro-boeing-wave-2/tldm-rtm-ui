@@ -40,8 +40,10 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   setEmailAndWorkspace(email: string, workspace: string) {
+    console.log("setting workspace");
     this.emailId.next(email);
     this.workspace.next(workspace);
+    console.log(this.workspace.value);
   }
 
   setListOfUsers (listofusers:User[]){

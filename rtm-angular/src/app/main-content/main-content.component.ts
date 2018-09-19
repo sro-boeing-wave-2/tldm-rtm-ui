@@ -240,7 +240,8 @@ export class MainContentComponent implements OnInit {
       "firstName": "",
       "lastName": "",
       "userId": ""
-    }
+    },
+    "channelId": ""
   }
   public joinChannel(channelId: string): void {
     this._hubConnection
@@ -252,6 +253,7 @@ export class MainContentComponent implements OnInit {
     this.messageObject.sender = this.currentuser;
     this.messageObject.isStarred = "false";
     this.messageObject.timestamp = new Date().toISOString();
+    this.messageObject.channelId = this.channelId;
     this._hubConnection
       .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId)
       .then(() => this.channelmessage = '')

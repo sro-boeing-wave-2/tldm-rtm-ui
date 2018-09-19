@@ -219,6 +219,10 @@ mat-sidenav{
   color: white;
 }
 
+.add-channel-icon:hover {
+  cursor: pointer;
+}
+
 .zero-height {
   height: 0;
   padding: 0;
@@ -302,8 +306,15 @@ mat-form-field {
 }
 
 .message-body {
-  width: 80%;
+  width: 85%;
 }
+
+/* #messageDiv {
+  height: 80%;
+  width: -webkit-fill-available;
+  overflow: auto
+} */
+
 
 .chat {
 

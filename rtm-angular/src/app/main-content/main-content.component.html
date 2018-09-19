@@ -180,7 +180,7 @@
 
       <div class="message-container" id="messageDiv">
         <div *ngIf="channelmessages.length > 0">
-          <ul class="list-group">
+          <ul class="list-group" >
             <li *ngFor="let message of channelmessages" style="list-style-type:none" class="chat" [class.float-right]="currentuser.firstName === message.sender['firstName']">
               <div class="user-photo"></div>
               <div class="message-body">
@@ -208,7 +208,8 @@
 </div>
 
 <script>
-    var objDiv = document.getElementById("messageDiv");
-    console.log(objDiv);
-    objDiv.scrollTop = objDiv.scrollHeight;
-  </script>
+  var objDiv = document.getElementById("messageDiv");
+  //var objDiv = document.getElementById("message-container");
+  console.log(objDiv.scrollHeight);
+  objDiv.scrollTop = objDiv.scrollHeight;
+</script>
