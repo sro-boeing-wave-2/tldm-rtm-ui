@@ -24,8 +24,9 @@ export class InviteMembersComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.currentEmailId.subscribe(email => this.currentEmail = email);
-    this.chatService.currentWorkspace.subscribe(workspace => this.currentWorkspace = workspace);
+    // this.chatService.currentWorkspace.subscribe(workspace => this.currentWorkspace = workspace);
     this.inviteservice.currentWorkspace.subscribe(workspace => this.workspace = workspace)
+    console.log(this.workspace);
     // .subscribe(workspace => this.workspace = workspace)
     this.emailForm = this.form.group({
       EmailId: ['', [Validators.required, Validators.email]],

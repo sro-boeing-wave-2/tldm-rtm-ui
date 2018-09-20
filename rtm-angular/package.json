@@ -30,6 +30,7 @@
     "ionic-angular": "^3.9.2",
     "ng-scroll-glue": "^2.0.10",
     "ngx-auto-scroll": "^1.1.0",
+    "ngx-toastr": "^9.1.0",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },
