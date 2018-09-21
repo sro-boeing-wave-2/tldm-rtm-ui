@@ -165,7 +165,8 @@ export class AddChannelComponent implements OnInit {
     private fb: FormBuilder,
     // private location: Location,
     private router: Router,
-    private chatService: ChatService
+    private chatService: ChatService,
+
   ) {
   }
   ngOnInit() {

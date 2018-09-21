@@ -200,7 +200,7 @@ mat-sidenav{
   /* color: white; */
   font-weight: bold;
   text-shadow: 2px;
-  height: 10vh;
+  height: 8vh;
  /* background-image: url("../../assets/images/10ed38490b10d9d6e21aa5eb8518e8db--freedom.jpg"); */
 }
 
@@ -209,7 +209,7 @@ mat-sidenav{
 .sidebar-sub-container {
   /* overflow-y: hidden; */
   /* height: 100vh; */
-  height: 90vh;
+  height: 92vh;
 
 }
 
@@ -357,7 +357,6 @@ mat-form-field {
 
 
 .chat {
-
   font-family:  'Lato', sans-serif;
   display: flex;
   flex-flow: row wrap;

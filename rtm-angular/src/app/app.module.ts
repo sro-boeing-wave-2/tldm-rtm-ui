@@ -54,6 +54,7 @@ import { AddChannelComponent } from './add-channel/add-channel.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { InviteMembersComponent } from './invite-members/invite-members.component';
 import { AddMembersToChannelComponent } from './add-members-to-channel/add-members-to-channel.component';
+import { Ng2Webstorage } from 'ngx-webstorage';
 
 
 @Component({
@@ -121,7 +122,8 @@ export class SampleComponent {
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    Ng2Webstorage
   ],
   providers: [ChatService],
   bootstrap: [AppComponent]

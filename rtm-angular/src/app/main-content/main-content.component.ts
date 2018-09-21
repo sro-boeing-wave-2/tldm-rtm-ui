@@ -11,6 +11,8 @@ import { User } from '../User';
 import { Message } from '../Message';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr'
+import { LocalStorageService } from 'ngx-webstorage';
+import { CookieStorage } from 'cookie-storage';
 
 @Component({
   selector: 'app-main-content',
@@ -43,6 +45,7 @@ export class MainContentComponent implements OnInit {
 
   // notification channel to redirect
   notigchannel : Channel;
+  token : string;
 
   _loginHomeUrl: string = "http://172.23.238.244:4200";
   messageObject: Message = {
@@ -89,6 +92,9 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit() {
+    const cookie = new CookieStorage();
+    cookie.setItem("abc", "def");
+    console.log("Token From Chat FrontEnd= ", this.localStorage.retrieve("token"));
     // rahuls code for online users
     setInterval(() => this.noofusers(), 1000);
 
@@ -99,7 +105,9 @@ export class MainContentComponent implements OnInit {
     this.emailId = this.orderObj["params"]["email"];
     this.workspaceName = this.orderObj["params"]["workspace"];
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
-
+    this.localStorage.store("token", this.orderObj["params"]["token"]);
+    this.token = this.localStorage.retrieve('token');
+    console.log(this.localStorage.retrieve("token"));
     //get workspace object
     this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
       .subscribe(s => {
@@ -122,6 +130,7 @@ export class MainContentComponent implements OnInit {
     }
 
   constructor(
+    private localStorage: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router,
     private chatservice: ChatService,
@@ -136,13 +145,14 @@ export class MainContentComponent implements OnInit {
       });
 
       this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
-        console.log("in sendtochannel method");
-        console.log(receivedMessage);
         if (receivedMessage.channelId == this.channelId) { this.channelmessages.push(receivedMessage); }
         if (username != this.emailId) {
           this.notify();
         };
-        this.launch_toast(receivedMessage.channelId);
+        // this.launch_toast(receivedMessage.channelId);
+        // if (username != this.emailId && receivedMessage.channelId != this.channelId){
+
+        // }
       });
 
       this._hubConnection
