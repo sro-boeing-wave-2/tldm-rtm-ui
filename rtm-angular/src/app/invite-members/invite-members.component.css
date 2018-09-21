@@ -1,4 +1,4 @@
-.example-card{
+/* .example-card{
   width: 500px;
   height: 500px;
   margin-left: 400px;
@@ -12,10 +12,116 @@
  }
  .example-full-width{
    width: 475px;
-   /* text-align: center; */
    align-content: center;
  }
  .buttonCss{
    align-items: center;
    padding-left: 13px;
- }
+ } */
+
+ .main-toolbar {
+  background-color: #320E3B;
+  color: white;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-header-image {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Cro_semicolon_plain.svg/2000px-Cro_semicolon_plain.svg.png');
+  background-size: cover;
+}
+.unauthorised {
+  color: red;
+  font-size: 15px;
+  margin-left: 5%;
+}
+.mailbg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80vw;
+  max-width: 400px;
+  min-height: 300px;
+  background: #320E3B;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.mailbg:before {
+  content: "";
+  position: absolute;
+  right: 50%;
+  top: 99%;
+  width: 0;
+  height: 0;
+  border-top: 50px solid #320E3B;
+  border-right: 30px solid transparent;
+  border-left: 5px solid transparent;
+  -webkit-transform: translate(0%, -0%);
+  -ms-transform: translate(0%, -0%);
+  transform: translate(0%, -0%);
+  transform: rotate(0deg);
+}
+h1 {
+  margin-left: 5%;
+  color: white;
+}
+h4 {
+  margin-left: 5%;
+  color: white;
+}
+.l1 {
+  margin-left: 5%;
+  color: white;
+}
+.mailinput {
+  box-sizing: border-box;
+  border: none;
+  padding: 5px;
+  margin-left: 50%;
+  margin-top: 2%;
+  width: 90%;
+  height: 50px;
+  resize: none;
+  font-size: 1.2em;
+  -webkit-transform: translate(-50%, -0%);
+  -ms-transform: translate(-50%, -0%);
+  transform: translate(-50%, -0%);
+}
+.mailinput:focus {
+  outline: none;
+}
+.sendmess {
+  margin-left: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  -webkit-transform: translate(-50%, -0%);
+  -ms-transform: translate(-50%, -0%);
+  transform: translate(-50%, -0%);
+  width: 90%;
+  height: 50px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  background: #320E3B;
+  line-height: 40px;
+  cursor: pointer;
+}
+.sendmess:focus {
+  outline: none;
+}
+.copyright p {
+  position: absolute;
+  top: 90%;
+  left: 40%;
+  margin-bottom: 2%;
+  text-align: center;
+  font-size: 14px;
+  color: #040F0F;
+  letter-spacing: 1px;
+  text-transform: none;
+}

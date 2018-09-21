@@ -20,8 +20,10 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class ChatService {
   private emailId = new BehaviorSubject('');
   currentEmailId = this.emailId.asObservable();
+  // currentEmailId = this.localstorage.retrieve('email');
   private workspace = new BehaviorSubject('');
   currentWorkspace = this.workspace.asObservable();
+  // currentWorkspace = this.localstorage.retrieve('workspacename');
 
   private listOfUsers = new BehaviorSubject([]);
   currentListOfUsers = this.listOfUsers.asObservable();

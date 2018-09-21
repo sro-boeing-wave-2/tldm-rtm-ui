@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../chat.service';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-invite-members',
@@ -20,7 +21,9 @@ export class InviteMembersComponent implements OnInit {
   constructor(private inviteservice: ChatService,
     private router: Router,
     private form: FormBuilder,
-    private chatService: ChatService) { }
+    private chatService: ChatService,
+    private localStorage: LocalStorageService
+  ) { }
 
   ngOnInit() {
     this.chatService.currentEmailId.subscribe(email => this.currentEmail = email);
@@ -59,7 +62,7 @@ export class InviteMembersComponent implements OnInit {
   }
 
   backToChatWindow() {
-    this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace } });
+    this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace, token: this.localStorage.retrieve('token') } });
   }
 
   // newMessage() {

@@ -103,7 +103,9 @@ export class MainContentComponent implements OnInit {
     });
 
     this.emailId = this.orderObj["params"]["email"];
+    // this.emailId = this.localStorage.retrieve('email');
     this.workspaceName = this.orderObj["params"]["workspace"];
+    // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
     this.localStorage.store("token", this.orderObj["params"]["token"]);
     this.token = this.localStorage.retrieve('token');
@@ -163,6 +165,7 @@ export class MainContentComponent implements OnInit {
       // rahuls code for online users
       this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
         this.loggedInUsers = activeusers;
+        console.log(activeusers);
       });
     }
 

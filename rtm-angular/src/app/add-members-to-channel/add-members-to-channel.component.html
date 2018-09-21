@@ -1,4 +1,4 @@
-<mat-card class="add-new-members">
+<!-- <mat-card class="add-new-members">
     <mat-card-title>
       Add new members
     </mat-card-title>
@@ -19,4 +19,29 @@
       </mat-list>
       <button mat-raised-button color="primary" (click)=addMembersToChannel()>Add Members</button>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
+
+  <div class="mailbg">
+    <h1>Add new members</h1>
+    <!-- <h4>Select the users you want to add to the channel:</h4> -->
+    <label class="l1">Select the users you want to add to the channel:</label>
+    <mat-selection-list [(ngModel)]= userSelected #selectedUsers>
+      <mat-list-option *ngFor= "let user of allUsers" [value]= user>
+        {{user.firstName}}
+      </mat-list-option>
+    </mat-selection-list>
+    <h5 class="l1">
+      Selected Users: {{selectedUsers.selectedOptions.selected.length}}
+    </h5>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor= "let user of userSelected">
+        {{user.firstName}}
+      </mat-list-item>
+    </mat-list>
+    <!-- <button mat-raised-button color="primary" (click)= addMembersToChannel()>Add Members</button> -->
+    <button (click)="addMembersToChannel()" class="sendmess">Add Members</button>
+  </div>
+
+  <div class="copyright">
+    <p> © 2018 TLDM . All rights reserved </p>
+  </div>

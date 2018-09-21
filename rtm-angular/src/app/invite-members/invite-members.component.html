@@ -1,4 +1,4 @@
-<mat-card class="example-card">
+<!-- <mat-card class="example-card">
     <mat-card-header>
 
       <mat-card-title>
@@ -26,4 +26,23 @@
         </form>
       </mat-card-content>
     </div>
-  </mat-card>
+  </mat-card> -->
+
+  <div class="mailbg">
+    <h1>Send invitations</h1>
+    <h4>Your workspace is ready to go. Know a few friends or coworkers who’d like to explore TLDM with you?</h4>
+    <form [formGroup]= "emailForm" (ngSubmit)= "onSubmit()">
+      <label class="l1" for="mailinput">Enter email id:</label>
+      <input formControlName= "EmailId" class="form-control mailinput" [ngClass]= "{ 'is-invalid': submitted && f.EmailId.errors }"
+        placeholder="" />
+      <div *ngIf="submitted && f.EmailId.errors" class="unauthorised">
+        <div *ngIf= "f.EmailId.errors.required">Email is required</div>
+        <div *ngIf= "f.EmailId.errors.email">Email must be a valid email address</div>
+      </div>
+      <button class="sendmess">Send Invitation</button>
+    </form>
+  </div>
+
+  <div class="copyright">
+    <p> © 2018 TLDM . All rights reserved </p>
+  </div>

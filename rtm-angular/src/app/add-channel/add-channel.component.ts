@@ -125,6 +125,7 @@ import { ChatService } from '../chat.service';
 import { User } from '../User';
 import { Channel } from '../Channel';
 import { Message } from '../Message';
+import { LocalStorageService } from 'ngx-webstorage';
 @Component({
   selector: 'app-add-channel',
   templateUrl: './add-channel.component.html',
@@ -166,7 +167,7 @@ export class AddChannelComponent implements OnInit {
     // private location: Location,
     private router: Router,
     private chatService: ChatService,
-
+    private localStorage: LocalStorageService
   ) {
   }
   ngOnInit() {
@@ -213,7 +214,7 @@ export class AddChannelComponent implements OnInit {
     this.channelToCreate.admin.lastName = this.currentUser.lastName;
     this.channelToCreate.admin.userId = this.currentUser.userId;
     this.chatService.createNewChannel(this.channelToCreate, this.currentWorkspace).subscribe();
-    setTimeout(()=>this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}}),300);
+    setTimeout(()=>this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
     // this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}});
     //console.log(this.channelToCreate);
   }
