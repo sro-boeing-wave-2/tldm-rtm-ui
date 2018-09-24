@@ -11,7 +11,8 @@ const routes : Routes = [
   { path: 'addChannel', component: AddChannelComponent},
   { path: '', component: MainContentComponent},
   { path: 'invite', component: InviteMembersComponent},
-  { path: 'addMembersToChannel', component: AddMembersToChannelComponent}
+  { path: 'addMembersToChannel', component: AddMembersToChannelComponent},
+  { path: '**', component: AddChannelComponent}
 ]
 
 @NgModule({

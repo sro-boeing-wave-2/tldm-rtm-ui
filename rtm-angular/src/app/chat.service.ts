@@ -38,10 +38,13 @@ export class ChatService {
 
   // private _chaturl = "http://172.23.238.230:5004/api/chat/workspaces";///////check port
 
- private _chaturl = "http://172.23.238.165:7000/connect/api/chat/workspaces";
+//  private _chaturl = "http://172.23.238.206:7001/connect/api/chat/workspaces";
+
+private _chaturl = "http://localhost:80/connect/api/chat/workspaces";
 
 //  private _ipaddress = "http://172.23.238.165:7000";
-  private inviteusers: string = "http://172.23.238.165:7000/onboard/invite";
+  // private inviteusers: string = "http://172.23.238.206:7001/onboard/invite";
+  private inviteusers: string = "http://localhost:80/onboard/invite";
 
   constructor(private http: HttpClient, private localstorage : LocalStorageService) {
 
@@ -144,7 +147,7 @@ export class ChatService {
       'Authorization'  : `Bearer ${this.localstorage.retrieve("token")}`
       })
     };
-    const url = "http://172.23.238.230:5004/api/chat/workspaces/user";
+    const url = "http://172.23.238.206:7001/connect/api/chat/workspaces/user";
     return this.http.get<User[]>(`${url}/${workspaceName}`, httpOptions).pipe(
       catchError(this.handleError<any>('getAllUsersInWorkspace'))
     );

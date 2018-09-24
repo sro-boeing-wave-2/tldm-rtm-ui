@@ -15,9 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './/app-routing.module';
 import { ChatService } from './chat.service';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-import {NgxAutoScrollModule} from "ngx-auto-scroll";
-import {NgxAutoScroll} from "ngx-auto-scroll";
-import {ToastrModule} from 'ngx-toastr'
+import { NgxAutoScrollModule} from "ngx-auto-scroll";
+import { NgxAutoScroll} from "ngx-auto-scroll";
+import { ToastrModule} from 'ngx-toastr'
 
 import {
   MatAutocompleteModule,

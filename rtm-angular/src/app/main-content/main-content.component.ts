@@ -39,6 +39,7 @@ export class MainContentComponent implements OnInit {
   workspaceObject: Workspace;
   defaultChannels: Channel[];
   numberOfMessages: number;
+  Currentlytyping: string;
 
   // rahuls variable of online users
   loggedInUsers: String[] = [];
@@ -102,8 +103,10 @@ export class MainContentComponent implements OnInit {
       this.orderObj = { ...params.keys, ...params };
     });
 
-    this.emailId = this.orderObj["params"]["email"];
-    // this.emailId = this.localStorage.retrieve('email');
+    // this.emailId = this.orderObj["params"]["email"];
+    console.log("Email from onboarding",this.localStorage.retrieve('email'));
+    console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
+    this.emailId = this.localStorage.retrieve('email');
     this.workspaceName = this.orderObj["params"]["workspace"];
     // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
@@ -157,6 +160,19 @@ export class MainContentComponent implements OnInit {
         // }
       });
 
+      this._hubConnection.on("whoistyping",(currentlytyping:string) =>{
+        this.Currentlytyping=currentlytyping;
+        var div=document.createElement('div');
+        setTimeout(()=>{
+        div.innerHTML=`<span>${this.Currentlytyping}</span>`;
+        document.body.appendChild(div);
+        div.style.bottom = '100%';},0);
+
+        setTimeout(()=>{
+        div.remove();
+        },6000);
+            });
+
       this._hubConnection
         .start()
         .then(() => { console.log('Connection started!') })
@@ -165,7 +181,6 @@ export class MainContentComponent implements OnInit {
       // rahuls code for online users
       this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
         this.loggedInUsers = activeusers;
-        console.log(activeusers);
       });
     }
 
@@ -242,4 +257,12 @@ export class MainContentComponent implements OnInit {
     x.className = "show";
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
   }
+
+  typingfunction(){
+    console.log("in the function");
+    console.log(this.channelId);
+    this._hubConnection
+    .invoke('whoistyping', this.channelId,this.currentuser.firstName)
+    .catch(err=>console.error(err));
+    }
 }
