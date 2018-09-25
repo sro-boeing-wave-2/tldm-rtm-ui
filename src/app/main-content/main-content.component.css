@@ -1,17 +1,14 @@
-
 /* bootstrap version */
-
 .container-fluid {
   padding: 0;
   height: 100vh;
   overflow: hidden;
 }
-
 .sidebar {
   background: #320E3B;
   padding: 0;
+  height: 100vh;
 }
-
 .side-navbar {
   font-family:  'Lato', sans-serif;
   border: 0;
@@ -26,58 +23,48 @@
   height: 8vh;
  /* background-image: url("../../assets/images/10ed38490b10d9d6e21aa5eb8518e8db--freedom.jpg"); */
 }
-
 .sidebar-sub-container {
   /* overflow-y: hidden; */
   /* height: 100vh; */
   height: 92vh;
-
 }
-
 .sidebar-sub-channel-container {
-  height: 48%;
+  height: 40%;
   overflow-y: scroll;
 }
-
 .sidebar-sub-direct-container {
-  height: 48%;
+  height: 40%;
   overflow-y: scroll;
 }
-
-
 .add-channel-icon {
   float: right;
   padding-right: 10px;
   color: white;
 }
-
 .add-channel-icon:hover {
   cursor: pointer;
 }
-
 .zero-height {
   height: 0;
   padding: 0;
   border: 0;
 }
-
 .channel-heading {
   font-size: 18px;
   font-family:  'Lato', sans-serif;
   padding-left: 10px;
-  color: white
+  color: white;
 }
-
 .notification_badge{
   z-index: 40;
   background: red;
   color: white;
   height: 20px;
-  width: 50px;
-  align-self: right;
+  width: 20px;
   border-radius: 16px;
+  text-align: center;
+  float: right;
 }
-
 .chat-navbar {
   font-family:  'Lato', sans-serif;
   text-align: center;
@@ -86,21 +73,17 @@
   padding: 0;
   margin: 0;
 }
-
 .workspacename {
   font-family:  'Lato', sans-serif;
   font-size: 20px;
 }
-
 .workspacename:hover {
   cursor: pointer;
 }
-
 .workspacename:hover .dropdown-content {
   display: block;
   cursor: pointer;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -109,29 +92,23 @@
   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   z-index: 1;
 }
-
 .logout {
   color: white;
   font-weight: bolder
 }
-
 .logout:hover {
   text-decoration: none;
   color: rgb(199, 35, 35);
 }
-
 .main-chat-container {
   font-family:  'Lato', sans-serif;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
-
-
 .chat-navbar-content {
   justify-content: space-evenly;
 }
-
 .channelname {
   font-family:  'Lato', sans-serif;
   float: left;
@@ -141,12 +118,10 @@
   align-self: center;
   font-weight: bolder
 }
-
 .chat-navbar-links {
   float: right;
   padding-top: 6px;
 }
-
 .message-form-input {
   outline: #320E3B;
   font-family:  'Lato', sans-serif;
@@ -158,14 +133,11 @@
   color: black;
   padding-left: 20px;
 }
-
 mat-form-field {
   width: 67%;
   padding: 10px;
   height: 80px;
 }
-
-
 .message-container {
   /* padding: 15px; */
   /* height: -webkit-fill-available; */
@@ -176,22 +148,18 @@ mat-form-field {
   position: absolute;
   /* position: fixed; */
 }
-
 .message-body {
   /* width: 85%; */
   margin-top: 10px
 }
-
 /* #messageDiv {
   height: 80%;
   width: -webkit-fill-available;
   overflow: auto
 } */
-
 .message-list-holder {
  margin: 20px;
 }
-
 .chat {
   font-family:  'Lato', sans-serif;
   display: flex;
@@ -203,7 +171,6 @@ mat-form-field {
   border-radius: 10px;
   max-width:50%;
 }
-
 .chat .user-photo {
   width: 40px;
   height: 40px;
@@ -213,96 +180,75 @@ mat-form-field {
   background-size: 100% 100%;
   border-radius: 50%;
 }
-
 .sender {
   padding-left: 30px;
   font-weight: bolder;
 }
-
 .chat .chat-message {
   font-family:  'Lato', sans-serif;
   width: 100%;
   padding: 15px;
   margin: 5px 15px 0
 }
-
 /* .float-left {
   clear: both;
   float: left;
 }
 */
-
 .float-right {
   float: right;
 }
-
 .sender-align {
   background: rgb(252, 227, 233);
   margin-right: 0px;
   margin-left: 50%
 }
-
 .fas:before{
   color:rgb(136, 223, 5);
   font-size:10px;
   padding-right: 20px;
  }
-
  .fa:before{
    color: gray;
   font-size:10px;
   padding-right: 20px;
  }
-
  .user-list {
    background: #320E3B
  }
-
  .user-list-item {
    background: #320E3B;
    color: white;
    border: 0;
    cursor: pointer;
  }
-
  .user-list-item:hover{
   background: rgb(36, 1, 49)
  }
-
  ::-webkit-scrollbar {
   width: 8px;
 }
-
 /* Track */
 div.sidebar-sub-container::-webkit-scrollbar-track {
   background: #320E3B;
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 @media (min-width: 1200px) {
-
 }
-
 /* Landscape tablets and medium desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
-
 }
-
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
-
 }
-
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px) {
   div.sidebar{
@@ -315,39 +261,31 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
     display: block;
       margin-left: 0;
 }
-
 }
-
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
   div.user-photo{
     display: none
   }
 }
-
-
 /* notification css */
 #toast.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
  }
-
  @-webkit-keyframes fadein {
   from {bottom: 0; opacity: 0;}
   to {bottom: 30px; opacity: 1;}
  }
-
  @keyframes fadein {
   from {bottom: 0; opacity: 0;}
   to {bottom: 30px; opacity: 1;}
  }
-
  @-webkit-keyframes expand {
   from {min-width: 50px}
   to {min-width: 350px}
  }
-
  @keyframes expand {
   from {min-width: 50px}
   to {min-width: 350px}
@@ -356,7 +294,6 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   from {min-width: 350px}
   to {min-width: 350px}
  }
-
  @keyframes stay {
   from {min-width: 350px}
   to {min-width: 350px}
@@ -365,17 +302,14 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   from {min-width: 350px;}
   to {min-width: 50px;}
  }
-
  @keyframes shrink {
   from {min-width: 350px;}
   to {min-width: 50px;}
  }
-
  @-webkit-keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 60px; opacity: 0;}
  }
-
  @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 60px; opacity: 0;}
@@ -390,7 +324,6 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   color: #fff;
   text-align: center;
   border-radius: 2px;
-
   position: fixed;
   z-index: 1;
   left: 0;right:0;
@@ -401,25 +334,16 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
  #toast #img{
  width: 50px;
  height: 50px;
-
   float: left;
-
   padding-top: 16px;
   padding-bottom: 16px;
-
   box-sizing: border-box;
-
-
   background-color: #111;
   color: #fff;
  }
  #toast #desc{
-
-
   color: #fff;
-
   padding: 16px;
-
   overflow: hidden;
  white-space: nowrap;
  }

@@ -54,7 +54,7 @@ export class MainContentComponent implements OnInit {
   notigchannel : Channel;
   token : string;
 
-  _loginHomeUrl: string = "http://172.23.238.244:4200";
+  _loginHomeUrl: string = "http://172.23.238.206:7001";
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -199,6 +199,7 @@ export class MainContentComponent implements OnInit {
 
       this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject:Workspace, workspacestateobject:WorkspaceState ) => {
         //console.log(workspaceobject)
+        console.log(workspacestateobject);
         this.workspaceObject = workspaceobject;
         this.workspaceStateObject = workspacestateobject;
         this.channelStateObject = workspacestateobject.listOfChannelState;
@@ -211,12 +212,12 @@ export class MainContentComponent implements OnInit {
 
       this._hubConnection.on("whoistyping",(currentlytyping:string, currentypingChannelId: string, currenttypingName: string) =>{
         if(currentypingChannelId == this.channelId){
-          this.Currentlytyping=currentlytyping;
+          this.Currentlytyping=currentlytyping + ' ...';
           var div=document.createElement('div');
           setTimeout(()=>{
           div.innerHTML=`<span>${this.Currentlytyping}</span>`;
-          document.body.appendChild(div);
-          div.style.bottom = '90%';},0);
+          document.getElementById('typing').appendChild(div);
+          div.style.position = 'relative';},0);
 
         setTimeout(()=>{
         div.remove();
@@ -259,13 +260,15 @@ export class MainContentComponent implements OnInit {
     this.selectedchannel = "directmessage";
     this.chatservice.getOneToOneChannel(this.emailId, user.emailId, this.workspaceName)
       .subscribe(s => {
+        console.log(s);
         this.channelSelected = s;
         this.channelmessages = s.messages;
         this.channelId = s.channelId;
       });
+     // console.log
 
     this.channelName = user.firstName;
-    this.channelId = this.channelSelected.channelId;
+    //this.channelId = this.channelSelected.channelId;
     setTimeout(() => this.joinChannel(this.channelSelected.channelId), 300);
   }
 

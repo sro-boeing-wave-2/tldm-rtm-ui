@@ -5,7 +5,7 @@
 
 <div class="container-fluid">
   <div class="col-sm-3 sidebar" id="sidebar">
-    <div class="row-xs-0">
+
       <nav class="navbar navbar-default nav-fixed-top side-navbar">
         <div class="workspacename">{{workspaceName}}
           <div id="toast">
@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-    </div>
+
   </div>
 
   <div class="col-sm-9 main-chat-container" id="content">
@@ -145,7 +145,7 @@
         </div>
       </div>
 
-      <form class="message-form-input row-xs-12">
+      <form class="message-form-input row-xs-12" id="typing">
         <mat-form-field>
           <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
             (click)="typingfunction()">
