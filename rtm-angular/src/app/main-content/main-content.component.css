@@ -68,6 +68,16 @@
   color: white
 }
 
+.notification_badge{
+  z-index: 40;
+  background: red;
+  color: white;
+  height: 20px;
+  width: 50px;
+  align-self: right;
+  border-radius: 16px;
+}
+
 .chat-navbar {
   font-family:  'Lato', sans-serif;
   text-align: center;

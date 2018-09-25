@@ -45,6 +45,7 @@ export class MainContentComponent implements OnInit {
   selectedchannel:string;
   workspaceStateObject: WorkspaceState;
   channelStateObject: ChannelState[];
+  currentypingChannelId: string;
 
   // rahuls variable of online users
   loggedInUsers: String[] = [];
@@ -128,10 +129,10 @@ export class MainContentComponent implements OnInit {
       this.orderObj = { ...params.keys, ...params };
     });
 
-    this.emailId = this.orderObj["params"]["email"];
-    console.log("Email from onboarding",this.localStorage.retrieve('email'));
-    console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
-    // this.emailId = this.localStorage.retrieve('email');
+    // this.emailId = this.orderObj["params"]["email"];
+    // console.log("Email from onboarding",this.localStorage.retrieve('email'));
+    // console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
+    this.emailId = this.localStorage.retrieve('email');
     this.workspaceName = this.orderObj["params"]["workspace"];
     // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
@@ -178,7 +179,7 @@ export class MainContentComponent implements OnInit {
     private fb: FormBuilder) {
       this.channelArray = new Array<Channel>();
       this._hubConnection = new HubConnectionBuilder()
-        .withUrl('http://172.23.238.230:5003/chat')
+        .withUrl('http://172.23.238.230:5004/chat')
         .build();
 
       this._hubConnection.on('JoinChannel', (channelId: string) => {
@@ -208,17 +209,20 @@ export class MainContentComponent implements OnInit {
         this.defaultChannels = workspaceobject.defaultChannels;
       })
 
-      this._hubConnection.on("whoistyping",(currentlytyping:string) =>{
-        this.Currentlytyping=currentlytyping;
-        var div=document.createElement('div');
-        setTimeout(()=>{
-        div.innerHTML=`<span>${this.Currentlytyping}</span>`;
-        document.body.appendChild(div);
-        div.style.bottom = '100%';},0);
+      this._hubConnection.on("whoistyping",(currentlytyping:string, currentypingChannelId: string, currenttypingName: string) =>{
+        if(currentypingChannelId == this.channelId){
+          this.Currentlytyping=currentlytyping;
+          var div=document.createElement('div');
+          setTimeout(()=>{
+          div.innerHTML=`<span>${this.Currentlytyping}</span>`;
+          document.body.appendChild(div);
+          div.style.bottom = '90%';},0);
 
         setTimeout(()=>{
         div.remove();
         },6000);
+        }
+
             });
 
       this._hubConnection
@@ -310,10 +314,10 @@ export class MainContentComponent implements OnInit {
   }
 
   typingfunction(){
-    console.log("in the function");
+    console.log("in the typing function");
     console.log(this.channelId);
     this._hubConnection
-    .invoke('whoistyping', this.channelId,this.currentuser.firstName)
+    .invoke('whoistyping',this.channelId, this.currentuser.firstName)
     .catch(err=>console.error(err));
     }
 }

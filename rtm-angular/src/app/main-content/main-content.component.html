@@ -40,7 +40,7 @@
                   <li *ngIf="channelstate.channelId == defaultChannel.channelId" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
                     <!-- #{{defaultChannel.channelName}} -->
                     #{{defaultChannel.channelName}}
-                    <span *ngIf="channelstate.unreadMessageCount > 0">
+                    <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
                         {{channelstate.unreadMessageCount}}
                     </span>
                   </li>
@@ -60,7 +60,7 @@
                 <div *ngFor="let channel of channelArray">
                   <li *ngIf="channelstate.channelId == channel.channelId" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
                     #{{channel.channelName}}
-                    <span *ngIf="channelstate.unreadMessageCount > 0">
+                    <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
                         {{channelstate.unreadMessageCount}}
                     </span>
                   </li>
