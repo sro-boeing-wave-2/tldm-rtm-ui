@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr'
 import { LocalStorageService } from 'ngx-webstorage';
 import { CookieStorage } from 'cookie-storage';
+import { WorkspaceState } from '../WorkspaceState';
+import { ChannelState } from '../ChannelState';
 
 @Component({
   selector: 'app-main-content',
@@ -40,6 +42,9 @@ export class MainContentComponent implements OnInit {
   defaultChannels: Channel[];
   numberOfMessages: number;
   Currentlytyping: string;
+  selectedchannel:string;
+  workspaceStateObject: WorkspaceState;
+  channelStateObject: ChannelState[];
 
   // rahuls variable of online users
   loggedInUsers: String[] = [];
@@ -78,11 +83,25 @@ export class MainContentComponent implements OnInit {
       this.messageObject.timestamp = new Date().toISOString();
       this.messageObject.channelId = this.channelId;
       this._hubConnection
-        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId)
+        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
         .then(() => this.channelmessage = '')
         .catch(err => console.error(err));
     }
   }
+
+  getNotificationCount(): void {
+    //console.log("in get count invoke method")
+    var timestamp = new Date().toISOString();
+    this._hubConnection
+    .invoke('GetNotificationsForChannelsInWorkspace', this.workspaceName, this.emailId, this.channelId, timestamp)
+    .then(s=> {
+      //console.log(s);
+      //this.workspaceStateObject = s;
+      //this.channelStateObject = this.workspaceStateObject.listOfChannelState;
+    })
+    .catch(err => console.error(err));
+  }
+
   orderObj;
 
   // rahuls code for online users
@@ -90,6 +109,12 @@ export class MainContentComponent implements OnInit {
     this._hubConnection
       .invoke('SendToAllconnid', this.emailId)
       .catch(err => console.error(err));
+  }
+
+  getWorkspaceObject(): void {
+    this._hubConnection
+    .invoke('SendWorkspaceObject', this.workspaceName, this.emailId)
+    .catch(err => console.error(err));
   }
 
   ngOnInit() {
@@ -103,10 +128,10 @@ export class MainContentComponent implements OnInit {
       this.orderObj = { ...params.keys, ...params };
     });
 
-    // this.emailId = this.orderObj["params"]["email"];
+    this.emailId = this.orderObj["params"]["email"];
     console.log("Email from onboarding",this.localStorage.retrieve('email'));
     console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
-    this.emailId = this.localStorage.retrieve('email');
+    // this.emailId = this.localStorage.retrieve('email');
     this.workspaceName = this.orderObj["params"]["workspace"];
     // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
@@ -114,23 +139,34 @@ export class MainContentComponent implements OnInit {
     this.token = this.localStorage.retrieve('token');
     console.log(this.localStorage.retrieve("token"));
     //get workspace object
-    this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
-      .subscribe(s => {
-        this.workspaceObject = s;
-        this.allUsers = s.users;
-        this.channelArray = s.channels;
-        this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
+    // this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
+    //   .subscribe(s => {
+    //     this.workspaceObject = s;
+    //     this.allUsers = s.users;
+    //     this.channelArray = s.channels;
+    //     this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
 
-        this.defaultChannels = s.defaultChannels;
-        //Instantiating chat context with the first default channel
-        this.getSelectedChannelDetails(this.defaultChannels[0]);
-        for (let channel of s.channels) {
-          setTimeout(() => this.joinChannel(channel.channelId), 300);
-        }
-        for (let defaultChannel of s.defaultChannels) {
-          setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
-        }
-      });
+    //     this.defaultChannels = s.defaultChannels;
+    //     //Instantiating chat context with the first default channel
+    //     this.getSelectedChannelDetails(this.defaultChannels[0]);
+    //     for (let channel of s.channels) {
+    //       setTimeout(() => this.joinChannel(channel.channelId), 300);
+    //     }
+    //     for (let defaultChannel of s.defaultChannels) {
+    //       setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
+    //     }
+    //   });
+    setInterval(() => this.getWorkspaceObject(), 1000);
+   //this.getWorkspaceObject();
+    setTimeout(() => this.getSelectedChannelDetails(this.defaultChannels[0]),2000);
+
+    setTimeout(() => {for (let channel of this.workspaceObject.channels) {
+      setTimeout(() => this.joinChannel(channel.channelId), 300);
+    }},2000)
+
+    setTimeout(() => {for (let defaultChannel of this.workspaceObject.defaultChannels) {
+      setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
+    }},2000)
     this.chatservice.setListOfUsers(this.allUsers);
     }
 
@@ -142,7 +178,7 @@ export class MainContentComponent implements OnInit {
     private fb: FormBuilder) {
       this.channelArray = new Array<Channel>();
       this._hubConnection = new HubConnectionBuilder()
-        .withUrl('http://172.23.238.230:5004/chat')
+        .withUrl('http://172.23.238.230:5003/chat')
         .build();
 
       this._hubConnection.on('JoinChannel', (channelId: string) => {
@@ -159,6 +195,18 @@ export class MainContentComponent implements OnInit {
 
         // }
       });
+
+      this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject:Workspace, workspacestateobject:WorkspaceState ) => {
+        //console.log(workspaceobject)
+        this.workspaceObject = workspaceobject;
+        this.workspaceStateObject = workspacestateobject;
+        this.channelStateObject = workspacestateobject.listOfChannelState;
+        //console.log(this.workspaceObject);
+        this.allUsers = workspaceobject.users;
+        this.channelArray = workspaceobject.channels;
+        this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
+        this.defaultChannels = workspaceobject.defaultChannels;
+      })
 
       this._hubConnection.on("whoistyping",(currentlytyping:string) =>{
         this.Currentlytyping=currentlytyping;
@@ -190,6 +238,7 @@ export class MainContentComponent implements OnInit {
   }
 
   getSelectedChannelDetails(channel: Channel) {
+    this.selectedchannel = "channel";
     console.log(this.workspaceObject);
     this.chatservice.getChannelById(channel.channelId)
       .subscribe(s => {
@@ -199,9 +248,11 @@ export class MainContentComponent implements OnInit {
 
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
+    setInterval(() =>this.getNotificationCount(),1000);
   }
 
   getDirectMessageDetails(user: User) {
+    this.selectedchannel = "directmessage";
     this.chatservice.getOneToOneChannel(this.emailId, user.emailId, this.workspaceName)
       .subscribe(s => {
         this.channelSelected = s;
