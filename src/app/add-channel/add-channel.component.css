@@ -1,1 +1,145 @@
 
+.main-toolbar {
+  background-color: #320E3B;
+  color: white;
+}
+.example-header-image {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Cro_semicolon_plain.svg/2000px-Cro_semicolon_plain.svg.png');
+  background-size: cover;
+}
+.unauthorised {
+  color: red;
+  font-size: 15px;
+  margin-left: 5%;
+}
+.required {
+  color: #F2F3D9;
+  font-size: 15px;
+  margin-left: 5%;
+}
+.mailbg {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 80vw;
+  max-width: 400px;
+  min-height: 400px;
+  background: #320E3B;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.mailbg:before {
+  content: "";
+  position: absolute;
+  right: 50%;
+  top: 99%;
+  width: 0;
+  height: 0;
+  border-top: 50px solid #320E3B;
+  border-right: 30px solid transparent;
+  border-left: 5px solid transparent;
+  -webkit-transform: translate(0%, -0%);
+  -ms-transform: translate(0%, -0%);
+  transform: translate(0%, -0%);
+  transform: rotate(0deg);
+}
+h1 {
+  margin-left: 5%;
+  color:white;
+}
+h4 {
+  margin-left: 5%;
+  color: white;
+}
+.l1 {
+  margin-left: 5%;
+  color: white;
+  font-size: 20px;
+}
+mat-list-option, mat-selection-list, mat-pseudo-checkbox, .mat-pseudo-checkbox {
+  color: white !important;
+}
+.sendmess {
+  margin-left: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  -webkit-transform: translate(-50%, -0%);
+  -ms-transform: translate(-50%, -0%);
+  transform: translate(-50%, -0%);
+  width: 90%;
+  height: 50px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  background: #320E3B;
+  line-height: 40px;
+  cursor: pointer;
+}
+.sendmess:focus {
+  outline: none;
+}
+.copyright p {
+  position: absolute;
+  top: 110%;
+  left: 40%;
+  margin-bottom: 2%;
+  text-align: center;
+  font-size: 14px;
+  color: #320E3B;
+  letter-spacing: 1px;
+  text-transform: none;
+}
+.mailinput {
+  box-sizing: border-box;
+  border: none;
+  padding: 5px;
+  margin-left: 50%;
+  margin-top: 2%;
+  width: 90%;
+  height: 50px;
+  resize: none;
+  font-size: 1.2em;
+  -webkit-transform: translate(-50%, -0%);
+  -ms-transform: translate(-50%, -0%);
+  transform: translate(-50%, -0%);
+}
+.mailinput:focus {
+  outline: none;
+}
+.enterChannel{
+  color: white;
+}
+.title{
+  text-align: center;
+  margin-left: 0 !important;
+}
+.userList {
+  max-height: 350px;
+  overflow-y: scroll
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+div.mat-selection-list::-webkit-scrollbar-track {
+  background: #320E3B;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.mat-pseudo-checkbox {
+  z-index: 400;
+  color: white !important;
+}

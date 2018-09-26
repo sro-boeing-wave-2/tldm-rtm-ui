@@ -1,87 +1,13 @@
-<mat-card class="add-new-channel">
-  <mat-card-title>
-    Create a channel
-  </mat-card-title>
-
-<form [formGroup]="channelForm">
-  <!-- <mat-form-field> -->
-    <label>Channel Name:</label>
-    <!-- <input matInput formControlName="channelName" [(ngModel)]=channelName> -->
-    <input type="text" formControlName ="channelName" class="form-control">
-  <!-- </mat-form-field> -->
-</form>
-  <mat-card-content>
-    <h4>Select the users you want to add to the channel:</h4>
-    <mat-selection-list [(ngModel)]=userSelected #selectedUsers>
+<div class="mailbg">
+    <h1 class="title">Create a channel</h1>
+    <form class ="enterChannel">
+      <input type="text" class="form-control mailinput" placeholder="Channel Name" formControlName ="channelName" required>
+    </form>
+    <label class="l1">Select the users you want to add to the channel:</label>
+    <mat-selection-list [(ngModel)]= userSelected #selectedUsers class="userList">
       <mat-list-option *ngFor="let user of allUsers" [value]=user>
         {{user.firstName}}
       </mat-list-option>
     </mat-selection-list>
-
-    <!-- <h5>
-      Selected Users: {{selectedUsers.selectedOptions.selected.length}}
-    </h5>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let user of userSelected">
-        {{user.firstName}}
-      </mat-list-item>
-    </mat-list> -->
-
-    <button mat-raised-button color="primary" (click)=addNewChannel()>Create Channel</button>
-
-
-
-  </mat-card-content>
-
-
-  <!-- <mat-card-content>
-      <form [formGroup]="AddChannelForm" (ngSubmit)="addNewChannel()">
-        <table class="content-class">
-          <tr>
-            <td>
-              <mat-form-field>
-                <label>Channel Name:</label>
-                <input matInput formControlName="channelName">
-              </mat-form-field>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <div formArrayName="users">
-                <h3>Members</h3>
-                <a (click)="getListOfUsersInWorkspace()">AddUser</a>
-
-
-                <mat-chip-list #chipList>
-                  <mat-chip *ngFor="let user of users"
-                  [selectable]="selectable"
-                  [removable]="removable"
-                  (removed)=remove(user)>
-                  {{user}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                  </mat-chip>
-
-                  <input
-                  placeholder="Search by Name"
-                  #UserInput
-                  [formControl]="userCtrl"
-                  [matAutocomplete]="auto"
-                  [matChipInputFor]="chipLast"
-                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  [matChipInputAddOnBlur]="addOnBlur"
-                  (matChipInputTokenEnd)="add($event)">
-                </mat-chip-list>
-
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                  <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
-                    {{user.firstName}}
-                  </mat-option>
-                </mat-autocomplete>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </mat-card-content> -->
-</mat-card>
+    <button class="sendmess">Create Channel</button>
+   </div>

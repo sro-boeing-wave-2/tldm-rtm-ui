@@ -38,13 +38,13 @@ export class ChatService {
 
   // private _chaturl = "http://172.23.238.230:5004/api/chat/workspaces";///////check port
 
- private _chaturl = "http://172.23.238.206:7001/connect/api/chat/workspaces"; // api gateway
+//  private _chaturl = "http://172.23.238.206:7001/connect/api/chat/workspaces"; // api gateway
 
-// private _chaturl = "http://13.233.42.222/connect/api/chat/workspaces"; // aws
+private _chaturl = "http://13.233.42.222/connect/api/chat/workspaces"; // aws
 
 //  private _ipaddress = "http://172.23.238.165:7000";
-  private inviteusers: string = "http://172.23.238.206:7001/onboard/invite";
-  // private inviteusers: string = "http://13.233.42.222/onboard/invite"; // aws
+  // private inviteusers: string = "http://172.23.238.206:7001/onboard/invite";
+  private inviteusers: string = "http://13.233.42.222/onboard/invite"; // aws
 
   constructor(private http: HttpClient, private localstorage : LocalStorageService) {
 
@@ -125,7 +125,9 @@ export class ChatService {
       'Authorization'  : `Bearer ${this.localstorage.retrieve("token")}`
       })
     };
-    const url = "http://172.23.238.230:5004/api/chat/user"
+    // const url = "http://172.23.238.230:5004/api/chat/user"
+    const url = "http://13.233.42.222/api/chat/user"
+
     return this.http.get<User>(`${url}/${userid}`, httpOptions).pipe(
       catchError(this.handleError<any>('getUserById'))
     );
@@ -148,7 +150,8 @@ export class ChatService {
       'Authorization'  : `Bearer ${this.localstorage.retrieve("token")}`
       })
     };
-    const url = "http://172.23.238.206:7001/connect/api/chat/workspaces/user";
+    // const url = "http://172.23.238.206:7001/connect/api/chat/workspaces/user";
+    const url = "http://13.233.42.222/connect/api/chat/workspaces/user";
     return this.http.get<User[]>(`${url}/${workspaceName}`, httpOptions).pipe(
       catchError(this.handleError<any>('getAllUsersInWorkspace'))
     );
