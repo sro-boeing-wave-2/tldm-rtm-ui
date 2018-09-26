@@ -113,7 +113,7 @@
             </h3>
 
             <div class="chat-navbar-links">
-
+              <button mat-button (click)="leaveChannel()">Leave Channel</button>
               <button mat-button (click)="addMembersToChannel()">Add Member</button>
               <button mat-button routerLink="/invite">Invite</button>
             </div>
@@ -127,10 +127,15 @@
 
       </nav>
 
-      <div class="message-container row-xs-12 row-sm-12" id="messageDiv" ngx-auto-scroll lock-y-offset="10">
+      <div class="message-container row-xs-12 row-sm-12" id="messageDiv" ngx-auto-scroll lock-y-offset="10"
+      infiniteScroll
+      [infiniteScrollDistance]="1"
+      [infiniteScrollThrottle]="10"
+      (scrolledUp)="loadMoreMessages()"
+      [scrollWindow]="false">
         <div *ngIf="channelmessages.length > 0">
           <ul class="list-group">
-            <button type="button" class="btn btn-light" (click)="loadMoreMessages()">Load Previous Messages</button>
+            <!-- <button type="button" class="btn btn-light" (click)="loadMoreMessages()">Load Previous Messages</button> -->
             <li *ngFor="let message of channelmessages" style="list-style-type:none" class="message-list-holder row-lg-6 row-sm-12">
               <div class="chat row-xs-6 row-sm-6" [class.sender-align]="currentuser.firstName === message.sender['firstName']">
                 <div class="user-photo"></div>

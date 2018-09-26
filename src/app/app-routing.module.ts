@@ -10,6 +10,7 @@ import { AddMembersToChannelComponent } from './add-members-to-channel/add-membe
 const routes : Routes = [
   { path: 'addChannel', component: AddChannelComponent},
   { path: '', component: MainContentComponent},
+  // { path: '/:workspace', component: MainContentComponent},
   { path: 'invite', component: InviteMembersComponent},
   { path: 'addMembersToChannel', component: AddMembersToChannelComponent},
   { path: '**', component: AddChannelComponent}

@@ -18,6 +18,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { NgxAutoScrollModule} from "ngx-auto-scroll";
 import { NgxAutoScroll} from "ngx-auto-scroll";
 import { ToastrModule} from 'ngx-toastr'
+import {InfiniteScrollModule} from 'ngx-infinite-scroll'
 
 import {
   MatAutocompleteModule,
@@ -55,6 +56,7 @@ import { MainContentComponent } from './main-content/main-content.component';
 import { InviteMembersComponent } from './invite-members/invite-members.component';
 import { AddMembersToChannelComponent } from './add-members-to-channel/add-members-to-channel.component';
 import { Ng2Webstorage } from 'ngx-webstorage';
+import { LeaveChannelDialogComponent } from './leave-channel-dialog/leave-channel-dialog.component';
 
 
 @Component({
@@ -74,9 +76,11 @@ export class SampleComponent {
     AddChannelComponent,
     MainContentComponent,
     InviteMembersComponent,
-    AddMembersToChannelComponent
+    AddMembersToChannelComponent,
+    LeaveChannelDialogComponent
   ],
   imports: [
+    InfiniteScrollModule,
     ToastrModule.forRoot(),
     NgxAutoScrollModule,
     ScrollDispatchModule,
@@ -126,6 +130,9 @@ export class SampleComponent {
     Ng2Webstorage
   ],
   providers: [ChatService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LeaveChannelDialogComponent
+ ]
 })
 export class AppModule { }

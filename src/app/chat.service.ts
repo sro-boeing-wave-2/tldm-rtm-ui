@@ -218,6 +218,18 @@ export class ChatService {
       catchError(this.handleError<any>('loadMoreMessages'))
     )
   }
+
+  deleteUserFromChannel(channelid:string, emailid:string):Observable<User>{
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json',
+      'Authorization'  : `Bearer ${this.localstorage.retrieve("token")}`
+      })
+    };
+    const url = `${this._chaturl +"/channels"}/${channelid}/${emailid}`;
+    return this.http.delete(url, httpOptions).pipe(
+      catchError(this.handleError<any>('deleteUserFromChannel'))
+    )
+  }
   /*============================================================== */
   sendInviteMail(email: any) {
     const httpOptions = {

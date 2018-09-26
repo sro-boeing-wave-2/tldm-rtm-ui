@@ -31,6 +31,7 @@
     "ionic-angular": "^3.9.2",
     "ng-scroll-glue": "^2.0.10",
     "ngx-auto-scroll": "^1.1.0",
+    "ngx-infinite-scroll": "^6.0.1",
     "ngx-toastr": "^9.1.0",
     "ngx-webstorage": "^2.0.1",
     "rxjs": "^6.0.0",

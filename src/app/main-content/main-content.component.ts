@@ -15,6 +15,8 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { CookieStorage } from 'cookie-storage';
 import { WorkspaceState } from '../WorkspaceState';
 import { ChannelState } from '../ChannelState';
+import {MatDialog} from '@angular/material';
+import { LeaveChannelDialogComponent } from '../leave-channel-dialog/leave-channel-dialog.component';
 
 @Component({
   selector: 'app-main-content',
@@ -46,6 +48,7 @@ export class MainContentComponent implements OnInit {
   workspaceStateObject: WorkspaceState;
   channelStateObject: ChannelState[];
   currentypingChannelId: string;
+  typingCount = 0;
 
   // rahuls variable of online users
   loggedInUsers: String[] = [];
@@ -134,6 +137,8 @@ export class MainContentComponent implements OnInit {
     // console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
     this.emailId = this.localStorage.retrieve('email');
     this.workspaceName = this.orderObj["params"]["workspace"];
+    this.localStorage.store('workspaceName', this.workspaceName);
+    this.localStorage.retrieve('workspaceName')
     // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
     this.localStorage.store("token", this.orderObj["params"]["token"]);
@@ -172,6 +177,7 @@ export class MainContentComponent implements OnInit {
     }
 
   constructor(
+    public dialog:MatDialog,
     private localStorage: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router,
@@ -218,12 +224,10 @@ export class MainContentComponent implements OnInit {
           div.innerHTML=`<span>${this.Currentlytyping}</span>`;
           document.getElementById('typing').appendChild(div);
           div.style.position = 'relative';},0);
-
         setTimeout(()=>{
         div.remove();
         },6000);
         }
-
             });
 
       this._hubConnection
@@ -317,10 +321,30 @@ export class MainContentComponent implements OnInit {
   }
 
   typingfunction(){
+    this.typingCount += 1;
     console.log("in the typing function");
     console.log(this.channelId);
-    this._hubConnection
+    if(this.typingCount<2) {
+      this._hubConnection
     .invoke('whoistyping',this.channelId, this.currentuser.firstName)
     .catch(err=>console.error(err));
+    setTimeout(()=>{
+      this.typingCount = 0;
+      },6000);
     }
+    else {
+      console.log('cannot invoke');}
+    }
+
+    leaveChannel(){
+      this.chatservice.setChannelSelected(this.channelSelected);
+      let dialogRef = this.dialog.open(LeaveChannelDialogComponent, {
+        width: '400px'
+      })
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("dialog box closed")
+      });
+    }
+
 }
