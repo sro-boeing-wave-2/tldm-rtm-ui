@@ -85,7 +85,7 @@ export class MainContentComponent implements OnInit {
       this.messageObject.messageBody = this.channelmessage;
       this.messageObject.sender = this.currentuser;
       this.messageObject.isStarred = "false";
-      this.messageObject.timestamp = new Date().toISOString();
+      this.messageObject.timestamp = new Date().toLocaleTimeString();
       this.messageObject.channelId = this.channelId;
       this._hubConnection
         .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
@@ -142,7 +142,7 @@ export class MainContentComponent implements OnInit {
     this.localStorage.retrieve('workspaceName')
     // this.workspaceName = this.localStorage.retrieve('workspacename');
     this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
-    this.localStorage.store("token", this.orderObj["params"]["token"]);
+    // this.localStorage.store("token", this.orderObj["params"]["token"]);
     this.token = this.localStorage.retrieve('token');
     console.log(this.localStorage.retrieve("token"));
     //get workspace object
@@ -186,10 +186,13 @@ export class MainContentComponent implements OnInit {
     private fb: FormBuilder) {
       this.channelArray = new Array<Channel>();
       // this._hubConnection = new HubConnectionBuilder()
-      //   .withUrl('http://172.23.239.243:5004/chat')
+      //   .withUrl('http://172.23.239.243:7001/chat-hub/chat')
+      //   .build(); // api gateway
+      // this._hubConnection = new HubConnectionBuilder()
+      //   .withUrl('http://172.23.239.174:5004/chat')
       //   .build();
       this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://13.233.42.222/connect/chat')
+      .withUrl('http://13.233.42.222/chat-api/chat')
       .build(); // aws
 
       this._hubConnection.on('JoinChannel', (channelId: string) => {
@@ -197,13 +200,14 @@ export class MainContentComponent implements OnInit {
       });
 
       this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
-        if (receivedMessage.channelId == this.channelId) { this.channelmessages.push(receivedMessage); }
+        if (receivedMessage.channelId == this.channelId) {
+          this.channelmessages.push(receivedMessage); }
         if (username != this.emailId) {
           this.notify();
         };
-        this.launch_toast(receivedMessage.channelId);
-        // if (username != this.emailId && receivedMessage.channelId != this.channelId){
-        // }
+        if (username != this.emailId && receivedMessage.channelId != this.channelId){
+          this.launch_toast(receivedMessage.channelId);
+        }
       });
 
       this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject:Workspace, workspacestateobject:WorkspaceState ) => {
@@ -226,10 +230,12 @@ export class MainContentComponent implements OnInit {
           setTimeout(()=>{
           div.innerHTML=`<span>${this.Currentlytyping}</span>`;
           document.getElementById('typing').appendChild(div);
-          div.style.position = 'relative';},0);
+          div.style.position = 'absolute';
+          div.style.zIndex = "60";
+          div.style.paddingLeft = "10px"},0);
         setTimeout(()=>{
         div.remove();
-        },6000);
+        },4000);
         }
             });
 

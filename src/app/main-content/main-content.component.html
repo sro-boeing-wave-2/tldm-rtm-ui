@@ -109,6 +109,11 @@
             </h3>
 
             <div class="chat-navbar-links">
+              <!-- <button><a href="http://172.23.239.243:7001/marketplace/apps">MarketPlace</a></button> -->
+
+                  <a href="http://172.23.239.243:7001/marketplace/apps"><i class="material-icons" matTooltip="Market Place" >
+                      dashboard</i></a>
+
               <!-- <button mat-button (click)="leaveChannel()">Leave Channel</button> -->
               <i class="material-icons" matTooltip="Leave Channel" (click)="leaveChannel()">
                   remove_circle_outline
@@ -146,6 +151,7 @@
                 <div class="user-photo"></div>
                 <div class="message-body ">
                   <div class="sender">{{ message.sender.firstName }} </div>
+                  <!-- <div class="sender">{{ message.timestamp }} </div> -->
                   <!-- {{message?.user['firstName']}}  -->
                   <div class="chat-message" [innerHTML]="message?.messageBody">{{message?.messageBody}}</div>
                 </div>
@@ -155,13 +161,25 @@
         </div>
       </div>
 
-      <form class="message-form-input row-xs-12" id="typing">
+      <!-- <form class="message-form-input row-xs-12" id="typing">
         <mat-form-field>
           <input matInput placeholder="Type your message" type="text" id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
             (click)="typingfunction()">
         </mat-form-field>
         <button mat-button class="send-button" (click)="sendMessageInChannel()"> <mat-icon>send</mat-icon> </button>
+      </form> -->
+
+      <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()">
+        <div class="message_input_wrapper">
+            <input type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
+            (click)="typingfunction()" ng-submit="sendMessageInChannel()"  />
+        </div>
+        <button class="send_message" type="submit">
+            <div class="icon"></div>
+            <div class="text" (click)="sendMessageInChannel()">Send</div>
+        </button>
       </form>
+
     </div>
 
   </div>
