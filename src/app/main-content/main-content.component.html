@@ -1,8 +1,4 @@
 <!-- ----------------Bootstrap version------------------------------- -->
-
-
-
-
 <div class="container-fluid">
   <div class="col-sm-3 sidebar" id="sidebar">
 
@@ -113,9 +109,18 @@
             </h3>
 
             <div class="chat-navbar-links">
-              <button mat-button (click)="leaveChannel()">Leave Channel</button>
-              <button mat-button (click)="addMembersToChannel()">Add Member</button>
-              <button mat-button routerLink="/invite">Invite</button>
+              <!-- <button mat-button (click)="leaveChannel()">Leave Channel</button> -->
+              <i class="material-icons" matTooltip="Leave Channel" (click)="leaveChannel()">
+                  remove_circle_outline
+                  </i>
+              <!-- <button mat-button (click)="addMembersToChannel()">Add Member</button> -->
+              <i class="material-icons" matTooltip="Add Member to Channel" (click)="addMembersToChannel()">
+                  group_add
+                  </i>
+              <!-- <button mat-button routerLink="/invite">Invite</button> -->
+              <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
+                  supervised_user_circle
+                  </i>
             </div>
           </div>
           <ng-template #elsepart>

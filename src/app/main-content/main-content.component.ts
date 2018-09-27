@@ -57,7 +57,8 @@ export class MainContentComponent implements OnInit {
   notigchannel : Channel;
   token : string;
 
-  _loginHomeUrl: string = "http://172.23.238.206:7001";
+  // _loginHomeUrl: string = "http://172.23.239.243:7001";
+  _loginHomeUrl: string = "http://13.233.42.222"; // aws
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -184,9 +185,12 @@ export class MainContentComponent implements OnInit {
     private chatservice: ChatService,
     private fb: FormBuilder) {
       this.channelArray = new Array<Channel>();
+      // this._hubConnection = new HubConnectionBuilder()
+      //   .withUrl('http://172.23.239.243:5004/chat')
+      //   .build();
       this._hubConnection = new HubConnectionBuilder()
-        .withUrl('http://172.23.238.230:5004/chat')
-        .build();
+      .withUrl('http://13.233.42.222/connect/chat')
+      .build(); // aws
 
       this._hubConnection.on('JoinChannel', (channelId: string) => {
         console.log("in joinchannel method" + channelId);
@@ -197,9 +201,8 @@ export class MainContentComponent implements OnInit {
         if (username != this.emailId) {
           this.notify();
         };
-        // this.launch_toast(receivedMessage.channelId);
+        this.launch_toast(receivedMessage.channelId);
         // if (username != this.emailId && receivedMessage.channelId != this.channelId){
-
         // }
       });
 
