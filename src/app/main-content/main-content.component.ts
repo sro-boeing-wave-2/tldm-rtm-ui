@@ -15,7 +15,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { CookieStorage } from 'cookie-storage';
 import { WorkspaceState } from '../WorkspaceState';
 import { ChannelState } from '../ChannelState';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { LeaveChannelDialogComponent } from '../leave-channel-dialog/leave-channel-dialog.component';
 
 @Component({
@@ -44,7 +44,7 @@ export class MainContentComponent implements OnInit {
   defaultChannels: Channel[];
   numberOfMessages: number;
   Currentlytyping: string;
-  selectedchannel:string;
+  selectedchannel: string;
   workspaceStateObject: WorkspaceState;
   channelStateObject: ChannelState[];
   currentypingChannelId: string;
@@ -54,8 +54,8 @@ export class MainContentComponent implements OnInit {
   loggedInUsers: String[] = [];
 
   // notification channel to redirect
-  notigchannel : Channel;
-  token : string;
+  notigchannel: Channel;
+  token: string;
 
   // _loginHomeUrl: string = "http://172.23.239.243:7001";
   _loginHomeUrl: string = "http://13.233.42.222"; // aws
@@ -98,13 +98,13 @@ export class MainContentComponent implements OnInit {
     //console.log("in get count invoke method")
     var timestamp = new Date().toISOString();
     this._hubConnection
-    .invoke('GetNotificationsForChannelsInWorkspace', this.workspaceName, this.emailId, this.channelId, timestamp)
-    .then(s=> {
-      //console.log(s);
-      //this.workspaceStateObject = s;
-      //this.channelStateObject = this.workspaceStateObject.listOfChannelState;
-    })
-    .catch(err => console.error(err));
+      .invoke('GetNotificationsForChannelsInWorkspace', this.workspaceName, this.emailId, this.channelId, timestamp)
+      .then(s => {
+        //console.log(s);
+        //this.workspaceStateObject = s;
+        //this.channelStateObject = this.workspaceStateObject.listOfChannelState;
+      })
+      .catch(err => console.error(err));
   }
 
   orderObj;
@@ -118,137 +118,148 @@ export class MainContentComponent implements OnInit {
 
   getWorkspaceObject(): void {
     this._hubConnection
-    .invoke('SendWorkspaceObject', this.workspaceName, this.emailId)
-    .catch(err => console.error(err));
+      .invoke('SendWorkspaceObject', this.workspaceName, this.emailId)
+      .catch(err => console.error(err));
   }
 
   ngOnInit() {
-    const cookie = new CookieStorage();
-    cookie.setItem("abc", "def");
-    console.log("Token From Chat FrontEnd= ", this.localStorage.retrieve("token"));
-    // rahuls code for online users
-    setInterval(() => this.noofusers(), 1000);
 
-    this.route.queryParamMap.subscribe(params => {
-      this.orderObj = { ...params.keys, ...params };
-    });
+    this._hubConnection
+      .start()
+      .then(() => {
+        console.log('Connection started!')
+        const cookie = new CookieStorage();
+        cookie.setItem("abc", "def");
+        console.log("Token From Chat FrontEnd= ", this.localStorage.retrieve("token"));
+        // rahuls code for online users
+        setInterval(() => this.noofusers(), 1000);
 
-    // this.emailId = this.orderObj["params"]["email"];
-    // console.log("Email from onboarding",this.localStorage.retrieve('email'));
-    // console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
-    this.emailId = this.localStorage.retrieve('email');
-    this.workspaceName = this.orderObj["params"]["workspace"];
-    this.localStorage.store('workspaceName', this.workspaceName);
-    this.localStorage.retrieve('workspaceName')
-    // this.workspaceName = this.localStorage.retrieve('workspacename');
-    this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
-    // this.localStorage.store("token", this.orderObj["params"]["token"]);
-    this.token = this.localStorage.retrieve('token');
-    console.log(this.localStorage.retrieve("token"));
-    //get workspace object
-    // this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
-    //   .subscribe(s => {
-    //     this.workspaceObject = s;
-    //     this.allUsers = s.users;
-    //     this.channelArray = s.channels;
-    //     this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
+        this.route.queryParamMap.subscribe(params => {
+          this.orderObj = { ...params.keys, ...params };
+        });
 
-    //     this.defaultChannels = s.defaultChannels;
-    //     //Instantiating chat context with the first default channel
-    //     this.getSelectedChannelDetails(this.defaultChannels[0]);
-    //     for (let channel of s.channels) {
-    //       setTimeout(() => this.joinChannel(channel.channelId), 300);
-    //     }
-    //     for (let defaultChannel of s.defaultChannels) {
-    //       setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
-    //     }
-    //   });
-    setInterval(() => this.getWorkspaceObject(), 1000);
-   //this.getWorkspaceObject();
-    setTimeout(() => this.getSelectedChannelDetails(this.defaultChannels[0]),2000);
+        // this.emailId = this.orderObj["params"]["email"];
+        // console.log("Email from onboarding",this.localStorage.retrieve('email'));
+        // console.log("Workspace From Onboarding",this.localStorage.retrieve('workspacename'));
+        this.emailId = this.localStorage.retrieve('email');
+        this.workspaceName = this.orderObj["params"]["workspace"];
+        this.localStorage.store('workspaceName', this.workspaceName);
+        this.localStorage.retrieve('workspaceName')
+        // this.workspaceName = this.localStorage.retrieve('workspacename');
+        this.chatservice.setEmailAndWorkspace(this.emailId, this.workspaceName);
+        // this.localStorage.store("token", this.orderObj["params"]["token"]);
+        this.token = this.localStorage.retrieve('token');
+        console.log(this.localStorage.retrieve("token"));
+        //get workspace object
+        // this.chatservice.getWorkspaceObjectByWorspaceName(this.workspaceName)
+        //   .subscribe(s => {
+        //     this.workspaceObject = s;
+        //     this.allUsers = s.users;
+        //     this.channelArray = s.channels;
+        //     this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
 
-    setTimeout(() => {for (let channel of this.workspaceObject.channels) {
-      setTimeout(() => this.joinChannel(channel.channelId), 300);
-    }},2000)
+        //     this.defaultChannels = s.defaultChannels;
+        //     //Instantiating chat context with the first default channel
+        //     this.getSelectedChannelDetails(this.defaultChannels[0]);
+        //     for (let channel of s.channels) {
+        //       setTimeout(() => this.joinChannel(channel.channelId), 300);
+        //     }
+        //     for (let defaultChannel of s.defaultChannels) {
+        //       setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
+        //     }
+        //   });
+        setInterval(() => this.getWorkspaceObject(), 1000);
+        //this.getWorkspaceObject();
+        setTimeout(() => this.getSelectedChannelDetails(this.defaultChannels[0]), 2000);
 
-    setTimeout(() => {for (let defaultChannel of this.workspaceObject.defaultChannels) {
-      setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
-    }},2000)
-    this.chatservice.setListOfUsers(this.allUsers);
-    }
+        setTimeout(() => {
+          for (let channel of this.workspaceObject.channels) {
+            setTimeout(() => this.joinChannel(channel.channelId), 300);
+          }
+        }, 2000)
+
+        setTimeout(() => {
+          for (let defaultChannel of this.workspaceObject.defaultChannels) {
+            setTimeout(() => this.joinChannel(defaultChannel.channelId), 300);
+          }
+        }, 2000)
+        this.chatservice.setListOfUsers(this.allUsers);
+      })
+      .catch(err => console.log('Error while establishing connection :('));
+
+
+  }
 
   constructor(
-    public dialog:MatDialog,
+    public dialog: MatDialog,
     private localStorage: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router,
     private chatservice: ChatService,
     private fb: FormBuilder) {
-      this.channelArray = new Array<Channel>();
-      // this._hubConnection = new HubConnectionBuilder()
-      //   .withUrl('http://172.23.239.243:7001/chat-hub/chat')
-      //   .build(); // api gateway
-      // this._hubConnection = new HubConnectionBuilder()
-      //   .withUrl('http://172.23.239.174:5004/chat')
-      //   .build();
-      this._hubConnection = new HubConnectionBuilder()
+    this.channelArray = new Array<Channel>();
+    this._hubConnection = new HubConnectionBuilder()
       .withUrl('http://13.233.42.222/chat-api/chat')
       .build(); // aws
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.239.243:7001/chat-hub/chat')
+    //   .build(); // api gateway
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.239.174:5004/chat')
+    //   .build();
+    this._hubConnection.on('JoinChannel', (channelId: string) => {
+      console.log("in joinchannel method" + channelId);
+    });
 
-      this._hubConnection.on('JoinChannel', (channelId: string) => {
-        console.log("in joinchannel method" + channelId);
-      });
+    this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
+      if (receivedMessage.channelId == this.channelId) {
+        this.channelmessages.push(receivedMessage);
+      }
+      if (username != this.emailId) {
+        this.notify();
+      };
+      if (username != this.emailId && receivedMessage.channelId != this.channelId) {
+        this.launch_toast(receivedMessage.channelId);
+      }
+    });
 
-      this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
-        if (receivedMessage.channelId == this.channelId) {
-          this.channelmessages.push(receivedMessage); }
-        if (username != this.emailId) {
-          this.notify();
-        };
-        if (username != this.emailId && receivedMessage.channelId != this.channelId){
-          this.launch_toast(receivedMessage.channelId);
-        }
-      });
+    this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject: Workspace, workspacestateobject: WorkspaceState) => {
+      //console.log(workspaceobject)
+      console.log(workspacestateobject);
+      this.workspaceObject = workspaceobject;
+      this.workspaceStateObject = workspacestateobject;
+      this.channelStateObject = workspacestateobject.listOfChannelState;
+      //console.log(this.workspaceObject);
+      this.allUsers = workspaceobject.users;
+      this.channelArray = workspaceobject.channels;
+      this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
+      this.defaultChannels = workspaceobject.defaultChannels;
+    })
 
-      this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject:Workspace, workspacestateobject:WorkspaceState ) => {
-        //console.log(workspaceobject)
-        console.log(workspacestateobject);
-        this.workspaceObject = workspaceobject;
-        this.workspaceStateObject = workspacestateobject;
-        this.channelStateObject = workspacestateobject.listOfChannelState;
-        //console.log(this.workspaceObject);
-        this.allUsers = workspaceobject.users;
-        this.channelArray = workspaceobject.channels;
-        this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
-        this.defaultChannels = workspaceobject.defaultChannels;
-      })
-
-      this._hubConnection.on("whoistyping",(currentlytyping:string, currentypingChannelId: string, currenttypingName: string) =>{
-        if(currentypingChannelId == this.channelId){
-          this.Currentlytyping=currentlytyping + ' ...';
-          var div=document.createElement('div');
-          setTimeout(()=>{
-          div.innerHTML=`<span>${this.Currentlytyping}</span>`;
+    this._hubConnection.on("whoistyping", (currentlytyping: string, currentypingChannelId: string, currenttypingName: string) => {
+      if (currentypingChannelId == this.channelId) {
+        this.Currentlytyping = currentlytyping + ' ...';
+        var div = document.createElement('div');
+        setTimeout(() => {
+          div.innerHTML = `<span>${this.Currentlytyping}</span>`;
           document.getElementById('typing').appendChild(div);
           div.style.position = 'absolute';
           div.style.zIndex = "60";
-          div.style.paddingLeft = "10px"},0);
-        setTimeout(()=>{
-        div.remove();
-        },4000);
-        }
-            });
+          div.style.paddingLeft = "10px"
+        }, 0);
+        setTimeout(() => {
+          div.remove();
+        }, 4000);
+      }
+    });
 
-      this._hubConnection
-        .start()
-        .then(() => { console.log('Connection started!') })
-        .catch(err => console.log('Error while establishing connection :('));
 
-      // rahuls code for online users
-      this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
-        this.loggedInUsers = activeusers;
-      });
-    }
+
+    // rahuls code for online users
+    this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
+      this.loggedInUsers = activeusers;
+    });
+  }
 
   startChannelCommunication(): void {
     this.chatservice.getChannelIdByWorkspaceName(this.workspaceName)
@@ -266,7 +277,7 @@ export class MainContentComponent implements OnInit {
 
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
-    setInterval(() =>this.getNotificationCount(),1000);
+    setInterval(() => this.getNotificationCount(), 1000);
   }
 
   getDirectMessageDetails(user: User) {
@@ -278,7 +289,7 @@ export class MainContentComponent implements OnInit {
         this.channelmessages = s.messages;
         this.channelId = s.channelId;
       });
-     // console.log
+    // console.log
 
     this.channelName = user.firstName;
     //this.channelId = this.channelSelected.channelId;
@@ -326,34 +337,35 @@ export class MainContentComponent implements OnInit {
     console.log("inside launch toast");
     console.log(this.notigchannel);
     x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 5000);
   }
 
-  typingfunction(){
+  typingfunction() {
     this.typingCount += 1;
     console.log("in the typing function");
     console.log(this.channelId);
-    if(this.typingCount<2) {
+    if (this.typingCount < 2) {
       this._hubConnection
-    .invoke('whoistyping',this.channelId, this.currentuser.firstName)
-    .catch(err=>console.error(err));
-    setTimeout(()=>{
-      this.typingCount = 0;
-      },6000);
+        .invoke('whoistyping', this.channelId, this.currentuser.firstName)
+        .catch(err => console.error(err));
+      setTimeout(() => {
+        this.typingCount = 0;
+      }, 6000);
     }
     else {
-      console.log('cannot invoke');}
+      console.log('cannot invoke');
     }
+  }
 
-    leaveChannel(){
-      this.chatservice.setChannelSelected(this.channelSelected);
-      let dialogRef = this.dialog.open(LeaveChannelDialogComponent, {
-        width: '400px'
-      })
+  leaveChannel() {
+    this.chatservice.setChannelSelected(this.channelSelected);
+    let dialogRef = this.dialog.open(LeaveChannelDialogComponent, {
+      width: '400px'
+    })
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log("dialog box closed")
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog box closed")
+    });
+  }
 
 }
