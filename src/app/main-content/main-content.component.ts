@@ -66,8 +66,8 @@ export class MainContentComponent implements OnInit {
   notigchannel: Channel;
   token: string;
 
-  _loginHomeUrl: string = "http://172.23.238.206:7001";
-  // _loginHomeUrl: string = "http://13.233.42.222"; // aws
+  // _loginHomeUrl: string = "http://172.23.238.206:7001";
+  _loginHomeUrl: string = "http://13.233.42.222"; // aws
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -96,6 +96,8 @@ export class MainContentComponent implements OnInit {
       this.messageObject.isStarred = "false";
       this.messageObject.timestamp = new Date().toLocaleTimeString();
       this.messageObject.channelId = this.channelId;
+      console.log("in sendmessage");
+      console.log(this.messageObject.timestamp);
       this._hubConnection
         .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
         .then(() => this.channelmessage = '')
@@ -207,12 +209,12 @@ export class MainContentComponent implements OnInit {
     private chatservice: ChatService,
     private fb: FormBuilder) {
     this.channelArray = new Array<Channel>();
-    // this._hubConnection = new HubConnectionBuilder()
-    //   .withUrl('http://13.233.42.222/chat-api/chat')
-    //   .build(); // aws
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://172.23.238.206:7001/chat-api/chat')
-      .build(); // api gateway
+      .withUrl('http://13.233.42.222/chat-api/chat')
+      .build(); // aws
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.238.206:7001/chat-api/chat')
+    //   .build(); // api gateway
     // this._hubConnection = new HubConnectionBuilder()
     //   .withUrl('http://172.23.239.174:5004/chat')
     //   .build();
@@ -221,6 +223,7 @@ export class MainContentComponent implements OnInit {
     });
 
     this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
+      receivedMessage.timestamp = receivedMessage.timestamp.slice(9,13);
       if (receivedMessage.channelId == this.channelId) {
         this.channelmessages.push(receivedMessage);
       }

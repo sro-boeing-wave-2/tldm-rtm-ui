@@ -180,15 +180,18 @@ mat-form-field {
  margin: 20px;
 }
 .chat {
-  box-shadow: 3px 3px 3px 3px #e9eaeb;
+  /* box-shadow: 2px 2px #dddddd; */
+  -webkit-box-shadow: 0 0 10px rgba(68, 67, 67, 0.2);
+  -moz-box-shadow: 0 0 10px rgba(68, 67, 67, 0.2);
+  box-shadow: 0 0 10px rgba(68, 67, 67, 0.2);
   font-family:  'Lato', sans-serif;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   /* background: #F1F1FB; */
-  background: #D8DBE2;
+  background: whitesmoke;
   /* background: white; */
-  border-radius: 10px;
+  /* border-radius: 10px; */
   max-width:50%;
 }
 

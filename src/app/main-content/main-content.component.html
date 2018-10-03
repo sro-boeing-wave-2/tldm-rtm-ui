@@ -238,7 +238,7 @@
               <div class="chat row-xs-6 row-sm-6" [class.sender-align]="currentuser.firstName === message.sender['firstName']">
                 <!-- <div class="user-photo"></div> -->
                 <div class="message-body ">
-                  <div class="sender">{{ message.sender.firstName }} </div>
+                  <div class="sender">{{ message.sender.firstName }} {{ message.sender.lastName }} <span> {{ message.timestamp }} </span></div>
                   <!-- <div class="sender">{{ message.timestamp }} </div> -->
                   <!-- {{message?.user['firstName']}}  -->
                   <div class="chat-message" [innerHTML]="message?.messageBody | safeHtml">{{message?.messageBody}}</div>
