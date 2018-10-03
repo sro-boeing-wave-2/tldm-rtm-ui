@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { User } from '../User';
 import { Channel } from '../Channel';
+import { Router } from '@angular/router';
+import { LocalStorageService } from 'ngx-webstorage';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-members-to-channel',
   templateUrl: './add-members-to-channel.component.html',
@@ -15,6 +18,10 @@ export class AddMembersToChannelComponent implements OnInit {
   channelSelected:Channel;
   userSelected:User[]=[];
   constructor(
+
+    private location: Location,
+    private router: Router,
+    private localStorage:LocalStorageService ,
     private chatService: ChatService
   ) { }
   ngOnInit() {
@@ -38,10 +45,16 @@ export class AddMembersToChannelComponent implements OnInit {
      }
     //console.log(this.allUsers);
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
   addMembersToChannel(){
     for(let user of this.userSelected){
       console.log(user);
       this.chatService.addMemberToChannel(user, this.channelSelected.channelId).subscribe();
     }
+    setTimeout(()=>this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
   }
 }

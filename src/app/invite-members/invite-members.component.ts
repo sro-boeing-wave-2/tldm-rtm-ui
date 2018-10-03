@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../chat.service';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { LocalStorageService } from 'ngx-webstorage';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-invite-members',
@@ -18,7 +19,9 @@ export class InviteMembersComponent implements OnInit {
   currentEmail: string;
   currentWorkspace: string;
 
-  constructor(private inviteservice: ChatService,
+  constructor(
+    private inviteservice: ChatService,
+    private location: Location,
     private router: Router,
     private form: FormBuilder,
     private chatService: ChatService,
@@ -36,6 +39,10 @@ export class InviteMembersComponent implements OnInit {
     })
   }
   get f() { return this.emailForm.controls; }
+
+  goBack(): void {
+    this.location.back();
+  }
 
   onSubmit() {
     this.submitted = true;

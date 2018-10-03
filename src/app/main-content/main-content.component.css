@@ -10,6 +10,7 @@
   height: 100vh;
 }
 .side-navbar {
+  /* background: #E6AF2E; */
   font-family:  'Lato', sans-serif;
   border: 0;
   border-bottom: 1px;
@@ -41,6 +42,11 @@
   padding-right: 10px;
   color: white;
 }
+
+.add-channel-mat-icon {
+  color: #E6AF2E
+}
+
 .add-channel-icon:hover {
   cursor: pointer;
 }
@@ -68,11 +74,11 @@
 .chat-navbar {
   font-family:  'Lato', sans-serif;
   text-align: center;
-  border-radius: 0px;
   height: 8vh;
   padding: 0;
   margin: 0;
 }
+
 .workspacename {
   font-family:  'Lato', sans-serif;
   font-size: 20px;
@@ -161,7 +167,7 @@ mat-form-field {
   background-size: cover;
 }
 .message-body {
-  width: 70%;
+  width: 95%;
   margin-top: 10px;
   margin-left: 7px;
 }
@@ -174,6 +180,7 @@ mat-form-field {
  margin: 20px;
 }
 .chat {
+  box-shadow: 3px 3px 3px 3px #e9eaeb;
   font-family:  'Lato', sans-serif;
   display: flex;
   flex-flow: row wrap;
@@ -195,9 +202,9 @@ mat-form-field {
   border-radius: 50%;
 }
 .sender {
-  /* padding-left: 30px; */
   font-weight: bolder;
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
+  padding-left: 14px;
 }
 .chat .chat-message {
   font-family:  'Lato', sans-serif;
@@ -208,7 +215,6 @@ mat-form-field {
 }
 
 .chat-message {
-  text-align: justify;
   overflow-wrap: break-word;
   margin: 0 !important;
 }
@@ -221,7 +227,7 @@ mat-form-field {
   float: right;
 }
 .sender-align {
-  background: rgb(252, 227, 233);
+  background: rgb(255, 237, 241);
   margin-right: 0px;
   margin-left: 50%
 }
@@ -554,9 +560,10 @@ body {
   text-align: center;
   float: right;
 }
+
 .bottom_wrapper .send_message:hover {
   color: #320E3B;
-  background-color: #fff;
+  background-color: #E6AF2E;
 }
 .bottom_wrapper .send_message .text {
   font-size: 18px;

@@ -40,6 +40,7 @@
         <div *ngIf= "f.EmailId.errors.email">Email must be a valid email address</div>
       </div>
       <button class="sendmess">Send Invitation</button>
+      <button class="sendmess" (click)="goBack()">Back to Workspace</button>
     </form>
   </div>
 

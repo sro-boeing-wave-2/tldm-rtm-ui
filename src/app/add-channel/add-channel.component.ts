@@ -126,6 +126,8 @@ import { User } from '../User';
 import { Channel } from '../Channel';
 import { Message } from '../Message';
 import { LocalStorageService } from 'ngx-webstorage';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-add-channel',
   templateUrl: './add-channel.component.html',
@@ -162,6 +164,7 @@ export class AddChannelComponent implements OnInit {
   currentUser: User;
   @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     // private location: Location,
@@ -192,6 +195,11 @@ export class AddChannelComponent implements OnInit {
   //     .subscribe(s => this.allUsers = s);
   //     console.log(this.allUsers);
   // }
+
+  goBack(): void {
+    this.location.back();
+  }
+
   addNewChannel() {
     //console.log(this.allUsers);
     //console.log("In addNewChannel");
@@ -214,7 +222,7 @@ export class AddChannelComponent implements OnInit {
     this.channelToCreate.admin.lastName = this.currentUser.lastName;
     this.channelToCreate.admin.userId = this.currentUser.userId;
     this.chatService.createNewChannel(this.channelToCreate, this.currentWorkspace).subscribe();
-    setTimeout(()=>this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
+    setTimeout(()=>this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
     // this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}});
     //console.log(this.channelToCreate);
   }

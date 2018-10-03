@@ -52,7 +52,7 @@ import {
 } from '@angular/material';
 
 import { AddChannelComponent } from './add-channel/add-channel.component';
-import { MainContentComponent } from './main-content/main-content.component';
+import { MainContentComponent, SafeHtmlPipe } from './main-content/main-content.component';
 import { InviteMembersComponent } from './invite-members/invite-members.component';
 import { AddMembersToChannelComponent } from './add-members-to-channel/add-members-to-channel.component';
 import { Ng2Webstorage } from 'ngx-webstorage';
@@ -77,7 +77,8 @@ export class SampleComponent {
     MainContentComponent,
     InviteMembersComponent,
     AddMembersToChannelComponent,
-    LeaveChannelDialogComponent
+    LeaveChannelDialogComponent,
+    SafeHtmlPipe
   ],
   imports: [
     InfiniteScrollModule,

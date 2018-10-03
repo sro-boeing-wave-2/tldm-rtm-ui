@@ -1,6 +1,6 @@
 // kanikas code//
-
-import { Component, OnInit, Output } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'
+import { Component, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { ChatService } from '../chat.service';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
@@ -17,6 +17,15 @@ import { WorkspaceState } from '../WorkspaceState';
 import { ChannelState } from '../ChannelState';
 import { MatDialog } from '@angular/material';
 import { LeaveChannelDialogComponent } from '../leave-channel-dialog/leave-channel-dialog.component';
+
+@Pipe({ name: 'safeHtml'})
+export class SafeHtmlPipe implements PipeTransform  {
+ constructor(private sanitized: DomSanitizer) {}
+ transform(value) {
+  //  console.log(this.sanitized.bypassSecurityTrustHtml(value))
+   return this.sanitized.bypassSecurityTrustHtml(value);
+ }
+}
 
 @Component({
   selector: 'app-main-content',
@@ -57,8 +66,8 @@ export class MainContentComponent implements OnInit {
   notigchannel: Channel;
   token: string;
 
-  // _loginHomeUrl: string = "http://172.23.239.243:7001";
-  _loginHomeUrl: string = "http://13.233.42.222"; // aws
+  _loginHomeUrl: string = "http://172.23.238.206:7001";
+  // _loginHomeUrl: string = "http://13.233.42.222"; // aws
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -170,7 +179,7 @@ export class MainContentComponent implements OnInit {
         //   });
         setInterval(() => this.getWorkspaceObject(), 1000);
         //this.getWorkspaceObject();
-        setTimeout(() => this.getSelectedChannelDetails(this.defaultChannels[0]), 2000);
+        setTimeout(() => this.getDefaultChannelDetails(this.defaultChannels[0]), 2000);
 
         setTimeout(() => {
           for (let channel of this.workspaceObject.channels) {
@@ -198,12 +207,12 @@ export class MainContentComponent implements OnInit {
     private chatservice: ChatService,
     private fb: FormBuilder) {
     this.channelArray = new Array<Channel>();
-    this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://13.233.42.222/chat-api/chat')
-      .build(); // aws
     // this._hubConnection = new HubConnectionBuilder()
-    //   .withUrl('http://172.23.239.243:7001/chat-hub/chat')
-    //   .build(); // api gateway
+    //   .withUrl('http://13.233.42.222/chat-api/chat')
+    //   .build(); // aws
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl('http://172.23.238.206:7001/chat-api/chat')
+      .build(); // api gateway
     // this._hubConnection = new HubConnectionBuilder()
     //   .withUrl('http://172.23.239.174:5004/chat')
     //   .build();
@@ -225,7 +234,7 @@ export class MainContentComponent implements OnInit {
 
     this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject: Workspace, workspacestateobject: WorkspaceState) => {
       //console.log(workspaceobject)
-      console.log(workspacestateobject);
+      // console.log(workspacestateobject);
       this.workspaceObject = workspaceobject;
       this.workspaceStateObject = workspacestateobject;
       this.channelStateObject = workspacestateobject.listOfChannelState;
@@ -253,8 +262,6 @@ export class MainContentComponent implements OnInit {
       }
     });
 
-
-
     // rahuls code for online users
     this._hubConnection.on('SendToAllconnid', (activeusers: string[]) => {
       this.loggedInUsers = activeusers;
@@ -277,7 +284,21 @@ export class MainContentComponent implements OnInit {
 
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
-    setInterval(() => this.getNotificationCount(), 1000);
+    setInterval(() => this.getNotificationCount(), 2000);
+  }
+
+  getDefaultChannelDetails(channel: Channel) {
+    this.selectedchannel = "defaultchannel";
+    console.log(this.workspaceObject);
+    this.chatservice.getChannelById(channel.channelId)
+      .subscribe(s => {
+        this.channelSelected = s;
+        this.channelmessages = s.messages;
+      });
+
+    this.channelName = channel.channelName;
+    this.channelId = channel.channelId;
+    setInterval(() =>this.getNotificationCount(),1000);
   }
 
   getDirectMessageDetails(user: User) {
@@ -323,7 +344,7 @@ export class MainContentComponent implements OnInit {
 
   public notify() {
     let audio = new Audio();
-    audio.src = "../assets/sounds/unconvinced.mp3";
+    audio.src = "..src/assets/sounds/unconvinced.mp3";
     audio.load();
     audio.play();
   }

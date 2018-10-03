@@ -2,89 +2,78 @@
 <div class="container-fluid">
   <div class="col-sm-3 sidebar" id="sidebar">
 
-      <nav class="navbar navbar-default nav-fixed-top side-navbar">
-        <div class="workspacename">{{workspaceName}}
-          <div id="toast">
-            <div id="img">Icon</div>
-            <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">see messaage</a></div>
-          </div>
-          <div class="dropdown-content">
-            <a [href]="_loginHomeUrl" class="logout-button">
-              <button type="button" class="logout btn btn-link">Log out</button>
-            </a>
-          </div>
+    <nav class="navbar navbar-default nav-fixed-top side-navbar">
+      <div class="workspacename">{{workspaceName}}
+        <div id="toast">
+          <mat-icon id="img">message</mat-icon>
+          <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">see messaage</a></div>
         </div>
-        <div class="emailID">{{emailId}} </div>
-      </nav>
-      <div class="sidebar-sub-container">
-
-        <h3 class="channel-heading">Channels
-          <a class="add-channel-icon">
-            <mat-icon (click)=Channel()>playlist_add</mat-icon>
+        <div class="dropdown-content">
+          <a [href]="_loginHomeUrl" class="logout-button">
+            <button type="button" class="logout btn btn-link">Log out</button>
           </a>
-        </h3>
-        <div class="sidebar-sub-channel-container">
-          <div>
-            <!-- <ul class="list-group">
+        </div>
+      </div>
+      <div class="emailID">{{emailId}} </div>
+    </nav>
+    <div class="sidebar-sub-container">
+
+      <h3 class="channel-heading">Channels
+        <a class="add-channel-icon">
+          <mat-icon (click)=Channel() class="add-channel-mat-icon">playlist_add</mat-icon>
+        </a>
+      </h3>
+      <div class="sidebar-sub-channel-container">
+        <div>
+          <!-- <ul class="list-group">
               <li *ngFor="let defaultChannel of defaultChannels" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
                 #{{defaultChannel.channelName}}
               </li>
             </ul> -->
-            <ul class="list-group">
-              <div *ngFor="let channelstate of channelStateObject">
-                <div *ngFor="let defaultChannel of defaultChannels">
-                  <li *ngIf="channelstate.channelId == defaultChannel.channelId" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(defaultChannel)">
-                    <!-- #{{defaultChannel.channelName}} -->
-                    #{{defaultChannel.channelName}}
-                    <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
-                        {{channelstate.unreadMessageCount}}
-                    </span>
-                  </li>
-                </div>
+          <ul class="list-group">
+            <div *ngFor="let channelstate of channelStateObject">
+              <div *ngFor="let defaultChannel of defaultChannels">
+                <li *ngIf="channelstate.channelId == defaultChannel.channelId" class="list-group-item user-list-item"
+                  (click)="getDefaultChannelDetails(defaultChannel)">
+                  <!-- #{{defaultChannel.channelName}} -->
+                  #{{defaultChannel.channelName}}
+                  <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                    {{channelstate.unreadMessageCount}}
+                  </span>
+                </li>
               </div>
-            </ul>
-          </div>
-          <div *ngIf="channelArray.length>0">
-            <!-- <ul class="list-group">
+            </div>
+          </ul>
+        </div>
+        <div *ngIf="channelArray.length>0">
+          <!-- <ul class="list-group">
               <li *ngFor="let channel of channelArray" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
                 #{{channel.channelName}}
               </li>
             </ul> -->
-            <ul class="list-group">
-              <div *ngFor="let channelstate of channelStateObject">
-                <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
-                <div *ngFor="let channel of channelArray">
-                  <li *ngIf="channelstate.channelId == channel.channelId" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
-                    #{{channel.channelName}}
-                    <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
-                        {{channelstate.unreadMessageCount}}
-                    </span>
-                  </li>
-                </div>
+          <ul class="list-group">
+            <div *ngFor="let channelstate of channelStateObject">
+              <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
+              <div *ngFor="let channel of channelArray">
+                <li *ngIf="channelstate.channelId == channel.channelId" class="list-group-item user-list-item" (click)="getSelectedChannelDetails(channel)">
+                  #{{channel.channelName}}
+                  <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                    {{channelstate.unreadMessageCount}}
+                  </span>
+                </li>
               </div>
-            </ul>
-          </div>
+            </div>
+          </ul>
         </div>
+      </div>
 
-        <h3 class="channel-heading">Direct Messages
+      <!-- <h3 class="channel-heading">Direct Messages
         </h3>
         <div class="sidebar-sub-direct-container">
 
           <div *ngIf="allUsers.length>0">
-            <!-- <ul *ngFor="let user of allUsers">
-                  <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon>
-                    {{user.firstName}} {{user.lastName}}</a>
-                  </ul> -->
             <ul class="list-group user-list">
-              <!-- <li class="list-group-item user-list-item" (click)="getDirectMessageDetails(currentuser)">
-                <span class="online-icon">
-                  <i class="fas fa-circle"></i>
-                </span>
-                {{currentuser.firstName}} {{currentuser.lastName}} (You)
-              </li> -->
-              <!-- <span class="tc-white" (click)="getSelectedChannelDetails(channel)">{{channel.channelName}}</span> -->
               <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
-
                 <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
                   <i class="fas fa-circle"></i>
                 </span>
@@ -95,15 +84,116 @@
               </li>
             </ul>
           </div>
+        </div> -->
+      <h3 class="channel-heading">Direct Messages
+      </h3>
+      <div class="sidebar-sub-direct-container">
+        <div *ngIf="allUsers.length>0">
+          <!-- <ul class="list-group user-list">
+            <div *ngFor="let channelstate of channelStateObject">
+              <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)"
+                [class.zero-height]="currentuser == user">
+                <div *ngIf="currentuser != user && user.lastName !='Bot'">
+                  <div *ngFor="let userlist of channelstate.listOfUsers">
+                    <div *ngIf="userlist == user.emailId">
+                      <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                        <i class="fas fa-circle"></i>
+                      </span>
+                      <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                        <i class="fa fa-circle"></i>
+                      </span>
+                      <span>{{user.firstName}} {{user.lastName}}
+                        <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                          {{channelstate.unreadMessageCount}}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </li>
+            </div>
+          </ul> -->
+          <ul class="list-group user-list">
+            <div *ngFor="let user of allUsers" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
+              <div *ngIf="currentuser != user">
+                <div *ngFor="let channelstate of channelStateObject">
+
+                  <div *ngFor="let userlist of channelstate.listOfUsers">
+                    <div *ngIf="userlist == user.emailId">
+                      <li class="list-group-item user-list-item">
+                        <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                          <i class="fas fa-circle"></i>
+                        </span>
+                        <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                          <i class="fa fa-circle"></i>
+                        </span>
+                        <span>{{user.firstName}} {{user.lastName}}
+                          <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                            {{channelstate.unreadMessageCount}}
+                          </span>
+                        </span>
+                      </li>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </ul>
         </div>
       </div>
+
+      <h3 class="channel-heading">Apps</h3>
+      <div class="sidebar-sub-app-container">
+        <div *ngIf="allUsers.length>0">
+          <ul class="list-group user-list">
+            <div *ngFor="let channelstate of channelStateObject">
+              <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)"
+                [class.zero-height]="currentuser == user">
+                <div *ngIf="user.lastName =='Bot'">
+                  <div *ngFor="let userlist of channelstate.listOfUsers">
+                    <div *ngIf="userlist == user.emailId">
+                      <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                        <i class="fas fa-circle"></i>
+                      </span>
+                      <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                        <i class="fa fa-circle"></i>
+                      </span>
+                      <span>{{user.firstName}} {{user.lastName}}
+                        <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                          {{channelstate.unreadMessageCount}}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
 
   </div>
 
   <div class="col-sm-9 main-chat-container" id="content">
     <div>
       <nav class="navbar navbar-default nav-fixed-top chat-navbar">
-          <div *ngIf="selectedchannel == 'channel'; else elsepart;">
+        <div *ngIf="selectedchannel == 'defaultchannel'; else second;">
+          <h3 class="channelname" id="sidebarCollapse">
+            #{{channelName}}
+          </h3>
+          <div class="chat-navbar-links">
+            <a href="http://13.233.42.222/marketplace?/"><i class="material-icons" matTooltip="Market Place">
+                dashboard</i></a>
+            <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
+              supervised_user_circle
+            </i>
+          </div>
+        </div>
+        <ng-template #second>
+          <ng-container *ngIf="selectedchannel == 'channel'; else elsepart;">
             <h3 class="channelname" id="sidebarCollapse">
               #{{channelName}}
             </h3>
@@ -111,49 +201,47 @@
             <div class="chat-navbar-links">
               <!-- <button><a href="http://172.23.239.243:7001/marketplace/apps">MarketPlace</a></button> -->
 
-                  <a href="http://172.23.239.243:7001/marketplace/apps"><i class="material-icons" matTooltip="Market Place" >
-                      dashboard</i></a>
+              <a href="http://172.23.239.243:7001/marketplace/apps"><i class="material-icons" matTooltip="Market Place">
+                  dashboard</i></a>
 
               <!-- <button mat-button (click)="leaveChannel()">Leave Channel</button> -->
               <i class="material-icons" matTooltip="Leave Channel" (click)="leaveChannel()">
-                  remove_circle_outline
-                  </i>
+                remove_circle_outline
+              </i>
               <!-- <button mat-button (click)="addMembersToChannel()">Add Member</button> -->
               <i class="material-icons" matTooltip="Add Member to Channel" (click)="addMembersToChannel()">
-                  group_add
-                  </i>
+                group_add
+              </i>
               <!-- <button mat-button routerLink="/invite">Invite</button> -->
               <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
-                  supervised_user_circle
-                  </i>
+                supervised_user_circle
+              </i>
             </div>
-          </div>
-          <ng-template #elsepart>
-            <h3 class="channelname">
-              {{channelName}}
-            </h3>
-          </ng-template>
+          </ng-container>
 
+        </ng-template>
 
+        <ng-template #elsepart>
+          <h3 class="channelname">
+            {{channelName}}
+          </h3>
+        </ng-template>
       </nav>
 
       <div class="message-container row-xs-12 row-sm-12" id="messageDiv" ngx-auto-scroll lock-y-offset="10"
-      infiniteScroll
-      [infiniteScrollDistance]="1"
-      [infiniteScrollThrottle]="10"
-      (scrolledUp)="loadMoreMessages()"
-      [scrollWindow]="false">
+        infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="10" (scrolledUp)="loadMoreMessages()"
+        [scrollWindow]="false">
         <div *ngIf="channelmessages.length > 0">
           <ul class="list-group">
             <!-- <button type="button" class="btn btn-light" (click)="loadMoreMessages()">Load Previous Messages</button> -->
             <li *ngFor="let message of channelmessages" style="list-style-type:none" class="message-list-holder row-lg-6 row-sm-12">
               <div class="chat row-xs-6 row-sm-6" [class.sender-align]="currentuser.firstName === message.sender['firstName']">
-                <div class="user-photo"></div>
+                <!-- <div class="user-photo"></div> -->
                 <div class="message-body ">
                   <div class="sender">{{ message.sender.firstName }} </div>
                   <!-- <div class="sender">{{ message.timestamp }} </div> -->
                   <!-- {{message?.user['firstName']}}  -->
-                  <div class="chat-message" [innerHTML]="message?.messageBody">{{message?.messageBody}}</div>
+                  <div class="chat-message" [innerHTML]="message?.messageBody | safeHtml">{{message?.messageBody}}</div>
                 </div>
               </div>
             </li>
@@ -171,18 +259,17 @@
 
       <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()">
         <div class="message_input_wrapper">
-            <input type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage" [(ngModel)]="channelmessage"
-            (click)="typingfunction()" ng-submit="sendMessageInChannel()"  />
+          <input type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage"
+            [(ngModel)]="channelmessage" (click)="typingfunction()" autocomplete="off" />
         </div>
-        <button class="send_message" type="submit">
-            <div class="icon"></div>
-            <div class="text" (click)="sendMessageInChannel()">Send</div>
+        <button class="send_message">
+          <div class="icon"></div>
+          <div class="text">Send</div>
         </button>
       </form>
+
 
     </div>
 
   </div>
 </div>
-
-
