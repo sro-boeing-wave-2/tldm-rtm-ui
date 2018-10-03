@@ -58,6 +58,7 @@ export class MainContentComponent implements OnInit {
   channelStateObject: ChannelState[];
   currentypingChannelId: string;
   typingCount = 0;
+  toggleflag = 0;
 
   // rahuls variable of online users
   loggedInUsers: String[] = [];
@@ -66,8 +67,8 @@ export class MainContentComponent implements OnInit {
   notigchannel: Channel;
   token: string;
 
-  // _loginHomeUrl: string = "http://172.23.238.206:7001";
-  _loginHomeUrl: string = "http://13.233.42.222"; // aws
+  _loginHomeUrl: string = "http://172.23.238.206:7001";
+  // _loginHomeUrl: string = "http://13.233.42.222"; // aws
   messageObject: Message = {
     "messageId": "",
     "messageBody": "",
@@ -197,8 +198,6 @@ export class MainContentComponent implements OnInit {
         this.chatservice.setListOfUsers(this.allUsers);
       })
       .catch(err => console.log('Error while establishing connection :('));
-
-
   }
 
   constructor(
@@ -209,12 +208,12 @@ export class MainContentComponent implements OnInit {
     private chatservice: ChatService,
     private fb: FormBuilder) {
     this.channelArray = new Array<Channel>();
-    this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://13.233.42.222/chat-api/chat')
-      .build(); // aws
     // this._hubConnection = new HubConnectionBuilder()
-    //   .withUrl('http://172.23.238.206:7001/chat-api/chat')
-    //   .build(); // api gateway
+    //   .withUrl('http://13.233.42.222/chat-api/chat')
+    //   .build(); // aws
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl('http://172.23.238.206:7001/chat-api/chat')
+      .build(); // api gateway
     // this._hubConnection = new HubConnectionBuilder()
     //   .withUrl('http://172.23.239.174:5004/chat')
     //   .build();
@@ -223,7 +222,7 @@ export class MainContentComponent implements OnInit {
     });
 
     this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
-      receivedMessage.timestamp = receivedMessage.timestamp.slice(9,13);
+      receivedMessage.timestamp = receivedMessage.timestamp.slice(11,16);
       if (receivedMessage.channelId == this.channelId) {
         this.channelmessages.push(receivedMessage);
       }
@@ -278,7 +277,6 @@ export class MainContentComponent implements OnInit {
 
   getSelectedChannelDetails(channel: Channel) {
     this.selectedchannel = "channel";
-    console.log(this.workspaceObject);
     this.chatservice.getChannelById(channel.channelId)
       .subscribe(s => {
         this.channelSelected = s;
@@ -391,5 +389,51 @@ export class MainContentComponent implements OnInit {
       console.log("dialog box closed")
     });
   }
+  openSidenav() {
+    console.log("opensidenv called")
+    // document.getElementById("content").style.marginLeft = "30%" ;
+    document.getElementById("content").style.width = "75%" ;
+    document.getElementById("sidebar").style.width = "25%";
+    document.getElementById("sidebar").style.display = "inline";
+    document.getElementById("content").style.display = "inline";
+  }
+
+  closeSidenav() {
+    console.log("closesidenav called")
+    // document.getElementById("content").style.marginLeft = "0" ;
+    document.getElementById("content").style.width = "100%" ;
+    document.getElementById("sidebar").style.display = "none" ;
+    document.getElementById("content").style.display = "block" ;
+  }
+  toggleFunction() {
+    console.log(this.toggleflag);
+    if(this.toggleflag == 0) {
+      this.closeSidenav();
+      this.toggleflag = 1;
+    }
+    else{
+      this.openSidenav();
+      this.toggleflag = 0
+    }
+
+  }
+
+  putEmoji() {
+    console.log("in emoji")
+
+      this.messageObject.messageBody = "<i class='em em---1'></i>";
+      this.messageObject.sender = this.currentuser;
+      this.messageObject.isStarred = "false";
+      this.messageObject.timestamp = new Date().toLocaleTimeString();
+      this.messageObject.channelId = this.channelId;
+      console.log("in sendmessage");
+      console.log(this.messageObject.timestamp);
+      this._hubConnection
+        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
+        .then(() => this.channelmessage = '')
+        .catch(err => console.error(err));
+
+  }
+
 
 }

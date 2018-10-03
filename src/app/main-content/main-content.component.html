@@ -1,20 +1,25 @@
 <!-- ----------------Bootstrap version------------------------------- -->
 <div class="container-fluid">
-  <div class="col-sm-3 sidebar" id="sidebar">
+  <div class="col-sm-3 sidebar w3-animate-left" id="sidebar">
 
-    <nav class="navbar navbar-default nav-fixed-top side-navbar">
-      <div class="workspacename">{{workspaceName}}
-        <div id="toast">
-          <mat-icon id="img">message</mat-icon>
-          <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">see messaage</a></div>
-        </div>
-        <div class="dropdown-content">
-          <a [href]="_loginHomeUrl" class="logout-button">
-            <button type="button" class="logout btn btn-link">Log out</button>
-          </a>
-        </div>
-      </div>
-      <div class="emailID">{{emailId}} </div>
+    <nav class="navbar navbar-default nav-fixed-top side-navbar ">
+      <div class="sidenavDetails"  style="width: 80%; display: inline-block">
+          <div class="workspacename">
+              {{workspaceName}}
+             <!-- <div class="dropdown-content">
+               <a [href]="_loginHomeUrl" class="logout-button">
+                 <button type="button" class="logout btn btn-link">Log out</button>
+               </a>
+             </div> -->
+           </div>
+           <div class="emailID">{{emailId}} </div>
+          </div>
+          <span  style="display: inline-block"><i class="material-icons closeSidenavButton" (click)=closeSidenav()>
+              sort
+              </i></span>
+
+      <!-- <span><button (click)="closeSidenav()">X</button></span> -->
+
     </nav>
     <div class="sidebar-sub-container">
 
@@ -30,13 +35,13 @@
                 #{{defaultChannel.channelName}}
               </li>
             </ul> -->
-          <ul class="list-group">
+          <ul class="list-group defaultChannelList">
             <div *ngFor="let channelstate of channelStateObject">
               <div *ngFor="let defaultChannel of defaultChannels">
                 <li *ngIf="channelstate.channelId == defaultChannel.channelId" class="list-group-item user-list-item"
                   (click)="getDefaultChannelDetails(defaultChannel)">
                   <!-- #{{defaultChannel.channelName}} -->
-                  #{{defaultChannel.channelName}}
+                  #{{defaultChannel.channelName}}*
                   <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
                     {{channelstate.unreadMessageCount}}
                   </span>
@@ -116,7 +121,7 @@
           </ul> -->
           <ul class="list-group user-list">
             <div *ngFor="let user of allUsers" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
-              <div *ngIf="currentuser != user">
+              <div *ngIf="currentuser != user && user.lastName !='Bot'">
                 <div *ngFor="let channelstate of channelStateObject">
 
                   <div *ngFor="let userlist of channelstate.listOfUsers">
@@ -148,27 +153,30 @@
       <div class="sidebar-sub-app-container">
         <div *ngIf="allUsers.length>0">
           <ul class="list-group user-list">
-            <div *ngFor="let channelstate of channelStateObject">
-              <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)"
-                [class.zero-height]="currentuser == user">
-                <div *ngIf="user.lastName =='Bot'">
+            <div *ngFor="let user of allUsers" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
+              <div *ngIf="user.lastName =='Bot'">
+                <div *ngFor="let channelstate of channelStateObject">
+
                   <div *ngFor="let userlist of channelstate.listOfUsers">
                     <div *ngIf="userlist == user.emailId">
-                      <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
-                        <i class="fas fa-circle"></i>
-                      </span>
-                      <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
-                        <i class="fa fa-circle"></i>
-                      </span>
-                      <span>{{user.firstName}} {{user.lastName}}
-                        <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
-                          {{channelstate.unreadMessageCount}}
+                      <li class="list-group-item user-list-item">
+                        <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
+                          <i class="fas fa-circle"></i>
                         </span>
-                      </span>
+                        <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
+                          <i class="fa fa-circle"></i>
+                        </span>
+                        <span>{{user.firstName}} {{user.lastName}}
+                          <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                            {{channelstate.unreadMessageCount}}
+                          </span>
+                        </span>
+                      </li>
                     </div>
                   </div>
+
                 </div>
-              </li>
+              </div>
             </div>
           </ul>
         </div>
@@ -177,24 +185,43 @@
 
   </div>
 
-  <div class="col-sm-9 main-chat-container" id="content">
+  <div class="col-sm-9 main-chat-container w3-animate-right" id="content">
     <div>
       <nav class="navbar navbar-default nav-fixed-top chat-navbar">
+          <div id="toast">
+            <mat-icon id="img">message</mat-icon>
+            <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">see messaage</a></div>
+          </div>
         <div *ngIf="selectedchannel == 'defaultchannel'; else second;">
-          <h3 class="channelname" id="sidebarCollapse">
-            #{{channelName}}
-          </h3>
+            <span>
+
+            <h3 class="channelname" id="sidebarCollapse">
+                <i class="material-icons"  (click)="toggleFunction()">
+                    subject
+                    </i>
+              #{{channelName}}
+            </h3>
+          </span>
+
+
           <div class="chat-navbar-links">
             <a href="http://13.233.42.222/marketplace?/"><i class="material-icons" matTooltip="Market Place">
                 dashboard</i></a>
             <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
               supervised_user_circle
             </i>
+            <a [href]="_loginHomeUrl" class="logout-icon"><i matTooltip="Logout" class="material-icons" >
+                exit_to_app
+                </i></a>
+
           </div>
         </div>
         <ng-template #second>
           <ng-container *ngIf="selectedchannel == 'channel'; else elsepart;">
             <h3 class="channelname" id="sidebarCollapse">
+                <i class="material-icons"  (click)="toggleFunction()">
+                    subject
+                    </i>
               #{{channelName}}
             </h3>
 
@@ -216,6 +243,9 @@
               <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
                 supervised_user_circle
               </i>
+              <a [href]="_loginHomeUrl" class="logout-icon"><i matTooltip="Logout" class="material-icons" >
+                  exit_to_app
+                  </i></a>
             </div>
           </ng-container>
 
@@ -223,8 +253,20 @@
 
         <ng-template #elsepart>
           <h3 class="channelname">
+              <i class="material-icons"  (click)="toggleFunction()">
+                  subject
+                  </i>
             {{channelName}}
           </h3>
+          <div class="chat-navbar-links">
+              <i class="material-icons" matTooltip="Invite to Workspace" routerLink="/invite">
+                supervised_user_circle
+              </i>
+              <a [href]="_loginHomeUrl" class="logout-icon"><i matTooltip="Logout" class="material-icons" >
+                  exit_to_app
+                  </i></a>
+          </div>
+
         </ng-template>
       </nav>
 
@@ -232,13 +274,14 @@
         infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="10" (scrolledUp)="loadMoreMessages()"
         [scrollWindow]="false">
         <div *ngIf="channelmessages.length > 0">
-          <ul class="list-group">
+          <ul class="list-group row">
             <!-- <button type="button" class="btn btn-light" (click)="loadMoreMessages()">Load Previous Messages</button> -->
-            <li *ngFor="let message of channelmessages" style="list-style-type:none" class="message-list-holder row-lg-6 row-sm-12">
-              <div class="chat row-xs-6 row-sm-6" [class.sender-align]="currentuser.firstName === message.sender['firstName']">
+            <li *ngFor="let message of channelmessages" style="list-style-type:none" class="message-list-holder col-lg-6 col-sm-12">
+              <div class="chat" [class.sender-align]="currentuser.firstName === message.sender['firstName']">
                 <!-- <div class="user-photo"></div> -->
                 <div class="message-body ">
-                  <div class="sender">{{ message.sender.firstName }} {{ message.sender.lastName }} <span> {{ message.timestamp }} </span></div>
+                  <div class="sender">{{ message.sender.firstName }} {{ message.sender.lastName }} <span class="message-time">
+                      {{ message.timestamp }} </span></div>
                   <!-- <div class="sender">{{ message.timestamp }} </div> -->
                   <!-- {{message?.user['firstName']}}  -->
                   <div class="chat-message" [innerHTML]="message?.messageBody | safeHtml">{{message?.messageBody}}</div>
@@ -258,8 +301,10 @@
       </form> -->
 
       <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()">
+
         <div class="message_input_wrapper">
-          <input type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage"
+            <span><a id="emoji_button" (click)="putEmoji()"><i class='em em---1'></i></a></span>
+          <input id="inputMsg" type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage"
             [(ngModel)]="channelmessage" (click)="typingfunction()" autocomplete="off" />
         </div>
         <button class="send_message">

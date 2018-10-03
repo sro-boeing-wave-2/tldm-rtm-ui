@@ -28,13 +28,23 @@
   /* overflow-y: hidden; */
   /* height: 100vh; */
   height: 92vh;
+  background: #320E3B
 }
 .sidebar-sub-channel-container {
-  height: 40%;
+  height: 25%;
   overflow-y: scroll;
 }
+
+.defaultChannelList {
+  margin-bottom: 0 !important;
+}
 .sidebar-sub-direct-container {
-  height: 40%;
+  height: 25%;
+  overflow-y: scroll;
+}
+
+.sidebar-sub-app-container {
+  height: 30%;
   overflow-y: scroll;
 }
 .add-channel-icon {
@@ -60,6 +70,9 @@
   font-family:  'Lato', sans-serif;
   padding-left: 10px;
   color: white;
+  background: #320E3B;
+  margin-top: 0;
+  padding-top: 15px
 }
 .notification_badge{
   z-index: 40;
@@ -77,6 +90,8 @@
   height: 8vh;
   padding: 0;
   margin: 0;
+  border-radius: 0 !important;
+  outline: 0 !important
 }
 
 .workspacename {
@@ -102,15 +117,21 @@
   color: white;
   font-weight: bolder
 }
-.logout:hover {
+.logout-icon:hover {
   text-decoration: none;
-  color: rgb(199, 35, 35);
+}
+
+.logout-icon {
+  color: red;
+
 }
 .main-chat-container {
   font-family:  'Lato', sans-serif;
   height: 100vh;
   margin: 0;
   padding: 0;
+  transition: ease-in 2s;
+  -webkit-transition: ease-in
 }
 .chat-navbar-content {
   justify-content: space-evenly;
@@ -122,7 +143,11 @@
   padding-top:10px;
   padding-left: 10px;
   align-self: center;
-  font-weight: bolder
+  font-weight: bolder;
+}
+
+.channelname:hover {
+  cursor: pointer;
 }
 .chat-navbar-links {
   float: right;
@@ -178,6 +203,7 @@ mat-form-field {
 } */
 .message-list-holder {
  margin: 20px;
+ width: 100%
 }
 .chat {
   /* box-shadow: 2px 2px #dddddd; */
@@ -192,7 +218,9 @@ mat-form-field {
   background: whitesmoke;
   /* background: white; */
   /* border-radius: 10px; */
-  max-width:50%;
+  /* max-width:50%; */
+  /* width: max-content; */
+  max-width: 50%
 }
 
 .chat .user-photo {
@@ -208,6 +236,11 @@ mat-form-field {
   font-weight: bolder;
   overflow-wrap: break-word;
   padding-left: 14px;
+}
+
+.message-time {
+  font-weight: lighter;
+ float: right;
 }
 .chat .chat-message {
   font-family:  'Lato', sans-serif;
@@ -232,7 +265,7 @@ mat-form-field {
 .sender-align {
   background: rgb(255, 237, 241);
   margin-right: 0px;
-  margin-left: 50%
+  margin-left: 42%;
 }
 .fas:before{
   color:rgb(136, 223, 5);
@@ -272,32 +305,43 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+.closeSidenavButton {
+  padding-bottom: 10px;
+}
 @media (min-width: 1200px) {
+  .closeSidenavButton {
+    display: none
+  }
 }
 /* Landscape tablets and medium desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
+  .closeSidenavButton {
+    display: none
+  }
 }
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
+  .closeSidenavButton {
+    display: none
+  }
 }
 /* Landscape phones and portrait tablets */
 @media (max-width: 767px) {
   div.sidebar{
     display: none;
+    width: 0 !important;
   }
-  #sidebar {
-    margin-right: -250px;
-  }
-  #sidebar.active {
+
+  div.content {
     display: block;
-      margin-left: 0;
-}
+    width: 100%
+  }
 }
 /* Portrait phones and smaller */
 @media (max-width: 480px) {
-  div.user-photo{
-    display: none
-  }
+
 }
 /* notification css */
 #toast.show {
@@ -547,7 +591,7 @@ body {
 }
 
 .message_input {
-  width: calc(100% - 40px) !important;
+  width: calc(100% - 80px) !important;
   color: black !important;
 }
 .bottom_wrapper .send_message {
