@@ -198,6 +198,8 @@ export class MainContentComponent implements OnInit {
         this.chatservice.setListOfUsers(this.allUsers);
       })
       .catch(err => console.log('Error while establishing connection :('));
+
+
   }
 
   constructor(
@@ -303,6 +305,7 @@ export class MainContentComponent implements OnInit {
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
     setInterval(() => this.getNotificationCount(), 2000);
+    // this.closeSidenav();
   }
 
   getDefaultChannelDetails(channel: Channel) {
@@ -317,6 +320,7 @@ export class MainContentComponent implements OnInit {
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
     setInterval(() =>this.getNotificationCount(),1000);
+
   }
 
   getDirectMessageDetails(user: User) {
@@ -333,6 +337,7 @@ export class MainContentComponent implements OnInit {
     this.channelName = user.firstName;
     //this.channelId = this.channelSelected.channelId;
     setTimeout(() => this.joinChannel(this.channelSelected.channelId), 300);
+    // this.closeSidenav()
   }
 
   Channel() {

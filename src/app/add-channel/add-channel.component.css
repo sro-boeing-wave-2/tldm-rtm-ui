@@ -1,4 +1,15 @@
-
+.container {
+  background: url(../../assets/images/creatchannelbg.jpg);;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:  center;
+  overflow: hidden;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  padding: 0;
+  margin: 0;
+  font-family: lato
+}
 .main-toolbar {
   background-color: #320E3B;
   color: white;
@@ -18,9 +29,9 @@
   margin-left: 5%;
 }
 .mailbg {
-  position: absolute;
+  position: relative;
   left: 50%;
-  top: 60%;
+  top: 50%;
   width: 80vw;
   max-width: 400px;
   min-height: 400px;
@@ -64,21 +75,22 @@ mat-list-option, mat-selection-list, mat-pseudo-checkbox, .mat-pseudo-checkbox {
   color: white !important;
 }
 .sendmess {
-  margin-left: 50%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  -webkit-transform: translate(-50%, -0%);
+  /* margin-left: 50%; */
+  /* margin-top: 5%;
+  margin-bottom: 5%; */
+  /* -webkit-transform: translate(-50%, -0%);
   -ms-transform: translate(-50%, -0%);
-  transform: translate(-50%, -0%);
-  width: 90%;
-  height: 50px;
+  transform: translate(-50%, -0%); */
+  /* width: 50%;
+  height: 50px; */
   text-align: center;
-  font-size: 1.2em;
-  font-weight: bold;
+  /* font-size: 1.2em; */
   color: white;
   background: #320E3B;
   line-height: 40px;
   cursor: pointer;
+  display: inline;
+  margin: 10px
 }
 .sendmess:focus {
   outline: none;
@@ -113,14 +125,18 @@ mat-list-option, mat-selection-list, mat-pseudo-checkbox, .mat-pseudo-checkbox {
 }
 .enterChannel{
   color: white;
+  padding-top: 10px;
 }
 .title{
   text-align: center;
   margin-left: 0 !important;
+  padding-top: 10px;
+  margin-bottom: 0;
 }
 .userList {
-  max-height: 350px;
-  overflow-y: scroll
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -142,4 +158,10 @@ div.mat-selection-list::-webkit-scrollbar-track {
 .mat-pseudo-checkbox {
   z-index: 400;
   color: white !important;
+}
+
+.buttonsclass {
+  padding-left: 14%;
+  margin: auto;
+  width: 100%;
 }

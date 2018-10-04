@@ -96,7 +96,7 @@
 
 .workspacename {
   font-family:  'Lato', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
 }
 .workspacename:hover {
   cursor: pointer;
@@ -144,6 +144,7 @@
   padding-left: 10px;
   align-self: center;
   font-weight: bolder;
+  font-size: 18px
 }
 
 .channelname:hover {
@@ -160,8 +161,8 @@
 }
 
 .chat-navbar-links i {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 .message-form-input {
   outline: #320E3B;

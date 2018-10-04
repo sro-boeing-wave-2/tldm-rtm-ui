@@ -127,6 +127,9 @@ import { Channel } from '../Channel';
 import { Message } from '../Message';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Location } from '@angular/common';
+import { Connection } from '@angular/http';
+
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 @Component({
   selector: 'app-add-channel',
@@ -146,6 +149,7 @@ export class AddChannelComponent implements OnInit {
   channelForm: FormGroup;
   currentEmail;
   currentWorkspace;
+  public _hubConnection: HubConnection;
   public channelToCreate:Channel = {
     "channelId": "",
     "messages": [],
@@ -172,6 +176,8 @@ export class AddChannelComponent implements OnInit {
     private chatService: ChatService,
     private localStorage: LocalStorageService
   ) {
+
+
   }
   ngOnInit() {
     this.chatService.currentEmailId.subscribe(email => this.currentEmail = email);
@@ -201,12 +207,25 @@ export class AddChannelComponent implements OnInit {
   }
 
   addNewChannel() {
-    //console.log(this.allUsers);
-    //console.log("In addNewChannel");
-    //console.log(this.channelForm.value.channelName);
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.238.230:5004/chat')
+    //   .build();
+
+    this._hubConnection = new HubConnectionBuilder()
+    .withUrl('http://13.233.42.222/chat-api/chat')
+    .build(); // aws
+
+this._hubConnection
+  .start()
+  .then(() => {
     for (let user of this.userSelected) {
       let u = user as User;
       this.channelToCreate["users"].push(u);
+      if(user.lastName == "Bot"){
+        this._hubConnection.invoke('SendAllUserChannel', user.emailId)
+        .then(s => {console.log("in sendalluserchannel")})
+        .catch((err => console.error(err)))
+      }
     }
     this.channelToCreate.channelName = this.channelForm.value.channelName;
     //var currentUser = this.allUsers.find(x => x.emailId == this.currentEmail);
@@ -223,6 +242,11 @@ export class AddChannelComponent implements OnInit {
     this.channelToCreate.admin.userId = this.currentUser.userId;
     this.chatService.createNewChannel(this.channelToCreate, this.currentWorkspace).subscribe();
     setTimeout(()=>this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
+  })
+    //console.log(this.allUsers);
+    //console.log("In addNewChannel");
+    //console.log(this.channelForm.value.channelName);
+
     // this.router.navigate([''], { queryParams: { email: this.currentEmail, workspace: this.currentWorkspace}});
     //console.log(this.channelToCreate);
   }

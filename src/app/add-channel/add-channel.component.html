@@ -1,17 +1,23 @@
-<div class="mailbg">
-    <h1 class="title">Create a channel</h1>
-    <!-- <div [formGroup]="form"> -->
-        <form class ="enterChannel" [formGroup]="channelForm" >
-            <input type="text" class="form-control mailinput" placeholder="Channel Name" formControlName ="channelName" required>
-          </form>
-    <!-- </div> -->
+<div class="container">
+    <div class="mailbg">
+        <h1 class="title">Create a channel</h1>
+        <!-- <div [formGroup]="form"> -->
+            <form class ="enterChannel" [formGroup]="channelForm" >
+                <input type="text" class="form-control mailinput" placeholder="Channel Name" formControlName ="channelName" required>
+              </form>
+        <!-- </div> -->
 
-    <label class="l1">Select the users you want to add to the channel:</label>
-    <mat-selection-list [(ngModel)]= userSelected #selectedUsers class="userList">
-      <mat-list-option *ngFor="let user of allUsers" [value]=user>
-        {{user.firstName}}
-      </mat-list-option>
-    </mat-selection-list>
-    <button class="sendmess" (click)="addNewChannel()">Create Channel</button>
-    <button class="sendmess" (click)="goBack()">Back to Workspace</button>
-   </div>
+        <label class="l1">Select the users you want to add to the channel:</label>
+        <mat-selection-list [(ngModel)]= userSelected #selectedUsers class="userList">
+          <mat-list-option *ngFor="let user of allUsers" [value]=user>
+            {{user.firstName}}
+          </mat-list-option>
+        </mat-selection-list>
+        <span class="buttonsclass">
+          <button class="sendmess" (click)="addNewChannel()">Create Channel</button>
+          <button class="sendmess" (click)="goBack()">Back to Workspace</button>
+        </span>
+
+       </div>
+</div>
+
