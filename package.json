@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve --host 0.0.0.0 --live-reload false",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@aspnet/signalr": "^1.0.3",
+    "@ctrl/ngx-emoji-mart": "^0.9.0",
     "angularjs-scroll-glue": "^2.2.0",
     "cookie-storage": "^3.2.0",
     "core-js": "^2.5.4",

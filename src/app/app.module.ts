@@ -19,6 +19,7 @@ import { NgxAutoScrollModule} from "ngx-auto-scroll";
 import { NgxAutoScroll} from "ngx-auto-scroll";
 import { ToastrModule} from 'ngx-toastr'
 import {InfiniteScrollModule} from 'ngx-infinite-scroll'
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
 
 import {
   MatAutocompleteModule,
@@ -81,6 +82,7 @@ export class SampleComponent {
     SafeHtmlPipe
   ],
   imports: [
+    PickerModule,
     InfiniteScrollModule,
     ToastrModule.forRoot(),
     NgxAutoScrollModule,

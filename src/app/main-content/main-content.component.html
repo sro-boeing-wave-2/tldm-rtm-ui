@@ -301,9 +301,14 @@
       </form> -->
 
       <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()">
-
         <div class="message_input_wrapper">
-            <span><a id="emoji_button" (click)="putEmoji()"><i class='em em---1'></i></a></span>
+          <span class="emoji-wrapper">
+              <span><a id="emoji_button" (click)="putEmoji()"><i class='em em---1'></i></a></span>
+              <span><a id="emoji_button" (click)="putEmoji()"><i class="em em-slightly_smiling_face"></i></a></span>
+              <span><a id="emoji_button" (click)="putEmoji()"><i class="em em-crossed_fingers"></i></a></span>
+          </span>
+
+            <!-- <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart> -->
           <input id="inputMsg" type="text" class="message_input" placeholder="Type here..." id="channelmessage" name="channelmessage"
             [(ngModel)]="channelmessage" (click)="typingfunction()" autocomplete="off" />
         </div>

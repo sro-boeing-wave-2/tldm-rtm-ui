@@ -310,6 +310,10 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
 .closeSidenavButton {
   padding-bottom: 10px;
 }
+
+.closeSidenavButton:hover {
+  cursor: pointer;
+}
 @media (min-width: 1200px) {
   .closeSidenavButton {
     display: none
@@ -591,7 +595,7 @@ body {
 }
 
 .message_input {
-  width: calc(100% - 80px) !important;
+  width: calc(100% - 120px);
   color: black !important;
 }
 .bottom_wrapper .send_message {
@@ -620,4 +624,13 @@ body {
 }
 .message_template {
   display: none;
+}
+
+#emoji_button {
+  margin-top: 10px;
+  padding-right: 5px;
+}
+
+.emoji-wrapper {
+  margin-top: 5px;
 }
