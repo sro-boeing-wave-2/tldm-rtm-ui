@@ -59,7 +59,7 @@ export class MainContentComponent implements OnInit {
   currentypingChannelId: string;
   typingCount = 0;
   toggleflag = 0;
-
+  toastmessage: string;
   // rahuls variable of online users
   loggedInUsers: String[] = [];
 
@@ -181,7 +181,7 @@ export class MainContentComponent implements OnInit {
         //     }
         //   });
         setInterval(() => this.getWorkspaceObject(), 1000);
-        //this.getWorkspaceObject();
+        // this.getWorkspaceObject();
         setTimeout(() => this.getDefaultChannelDetails(this.defaultChannels[0]), 2000);
 
         setTimeout(() => {
@@ -230,9 +230,25 @@ export class MainContentComponent implements OnInit {
         this.notify();
       };
       if (username != this.emailId && receivedMessage.channelId != this.channelId) {
-        this.launch_toast(receivedMessage.channelId);
+        this.launch_toast(receivedMessage.channelId, receivedMessage.sender.firstName + " : " + receivedMessage.messageBody);
       }
     });
+
+    this._hubConnection.on('ReceiveLeaveInChannelNotification', (user: User, channelid: string) => {
+      console.log(user);
+      var channel = this.channelArray.find(x => x.channelId == channelid)
+      if (user.emailId != this.emailId) {
+        this.launch_toast(channelid, channel.channelName + " : " + user.firstName + " left the channel");
+      }
+    })
+
+    this._hubConnection.on('ReceiveAddInChannelNotification', (user: User, channelid: string) => {
+      console.log(user);
+      var channel = this.channelArray.find(x => x.channelId == channelid)
+
+      this.launch_toast(channelid, channel.channelName + " : " + user.firstName + " added to the channel");
+
+    })
 
     this._hubConnection.on('ReceiveUpdatedWorkspace', (workspaceobject: Workspace, workspacestateobject: WorkspaceState) => {
       //console.log(workspaceobject)
@@ -242,6 +258,7 @@ export class MainContentComponent implements OnInit {
       this.channelStateObject = workspacestateobject.listOfChannelState;
       //console.log(this.workspaceObject);
       this.allUsers = workspaceobject.users;
+      console.log(this.allUsers);
       this.channelArray = workspaceobject.channels;
       this.currentuser = this.allUsers.find(x => x.emailId == this.emailId);
       this.defaultChannels = workspaceobject.defaultChannels;
@@ -350,7 +367,8 @@ export class MainContentComponent implements OnInit {
     audio.play();
   }
 
-  launch_toast(channelId: string) {
+  launch_toast(channelId: string, message: string) {
+    this.toastmessage = message;
     var x = document.getElementById("toast");
     this.chatservice.getChannelById(channelId)
       .subscribe(s => {
@@ -381,6 +399,7 @@ export class MainContentComponent implements OnInit {
 
   leaveChannel() {
     this.chatservice.setChannelSelected(this.channelSelected);
+    this.chatservice.setCurrentUser(this.currentuser);
     let dialogRef = this.dialog.open(LeaveChannelDialogComponent, {
       width: '400px'
     })
@@ -388,14 +407,26 @@ export class MainContentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log("dialog box closed")
     });
+    var refreshId = setInterval(() => {
+      var prop
+      this.chatservice.userAddedRemoved.subscribe(s => {
+        prop = s;
+      });
+      if (prop == "removed") {
+        this.getDefaultChannelDetails(this.defaultChannels[0]);
+        clearInterval(refreshId);
+      }
+    }, 2000)
   }
   openSidenav() {
     console.log("opensidenv called")
     // document.getElementById("content").style.marginLeft = "30%" ;
+
     document.getElementById("content").style.width = "75%" ;
     document.getElementById("sidebar").style.width = "25%";
     document.getElementById("sidebar").style.display = "inline";
     document.getElementById("content").style.display = "inline";
+    document.getElementById("message-form-input").style.display = "none" ;
   }
 
   closeSidenav() {
@@ -404,6 +435,7 @@ export class MainContentComponent implements OnInit {
     document.getElementById("content").style.width = "100%" ;
     document.getElementById("sidebar").style.display = "none" ;
     document.getElementById("content").style.display = "block" ;
+    document.getElementById("message-form-input").style.display = "inline" ;
   }
   toggleFunction() {
     console.log(this.toggleflag);
@@ -418,7 +450,7 @@ export class MainContentComponent implements OnInit {
 
   }
 
-  putEmoji() {
+  putEmoji1() {
     console.log("in emoji")
 
       this.messageObject.messageBody = "<i class='em em---1'></i>";
@@ -435,5 +467,38 @@ export class MainContentComponent implements OnInit {
 
   }
 
+  putEmoji2() {
+    console.log("in emoji")
+
+      this.messageObject.messageBody = "<i class='em em-slightly_smiling_face'></i>";
+      this.messageObject.sender = this.currentuser;
+      this.messageObject.isStarred = "false";
+      this.messageObject.timestamp = new Date().toLocaleTimeString();
+      this.messageObject.channelId = this.channelId;
+      console.log("in sendmessage");
+      console.log(this.messageObject.timestamp);
+      this._hubConnection
+        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
+        .then(() => this.channelmessage = '')
+        .catch(err => console.error(err));
+
+  }
+
+  putEmoji3() {
+    console.log("in emoji")
+
+      this.messageObject.messageBody = "<i class='em em-crossed_fingers'></i>";
+      this.messageObject.sender = this.currentuser;
+      this.messageObject.isStarred = "false";
+      this.messageObject.timestamp = new Date().toLocaleTimeString();
+      this.messageObject.channelId = this.channelId;
+      console.log("in sendmessage");
+      console.log(this.messageObject.timestamp);
+      this._hubConnection
+        .invoke('SendMessageInChannel', this.emailId, this.messageObject, this.channelId, this.workspaceName)
+        .then(() => this.channelmessage = '')
+        .catch(err => console.error(err));
+
+  }
 
 }

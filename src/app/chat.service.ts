@@ -31,7 +31,8 @@ export class ChatService {
   private currentUser = new BehaviorSubject(this.user);
   currentuser = this.currentUser.asObservable();
   Tokeninfo : string;
-
+  private useraddedremoved = new BehaviorSubject('');
+  userAddedRemoved = this.useraddedremoved.asObservable();
   channel: Channel;
   private channelSelected = new BehaviorSubject(this.channel);
   channelselected = this.channelSelected.asObservable();
@@ -68,6 +69,10 @@ private _chaturl = "http://13.233.42.222/chat-api/api/chat/workspaces"; // aws
 
   setChannelSelected(channel:Channel){
     this.channelSelected.next(channel);
+  }
+
+  setUserAddedRemovedProperty(property:string){
+    this.useraddedremoved.next(property);
   }
 
   CreateWorkspace(workspace: Workspace): Observable<Workspace> {

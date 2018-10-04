@@ -93,39 +93,15 @@
       <h3 class="channel-heading">Direct Messages
       </h3>
       <div class="sidebar-sub-direct-container">
-        <div *ngIf="allUsers.length>0">
-          <!-- <ul class="list-group user-list">
-            <div *ngFor="let channelstate of channelStateObject">
-              <li *ngFor="let user of allUsers" class="list-group-item user-list-item" (click)="getDirectMessageDetails(user)"
-                [class.zero-height]="currentuser == user">
-                <div *ngIf="currentuser != user && user.lastName !='Bot'">
-                  <div *ngFor="let userlist of channelstate.listOfUsers">
-                    <div *ngIf="userlist == user.emailId">
-                      <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
-                        <i class="fas fa-circle"></i>
-                      </span>
-                      <span class="offline-icon" *ngIf="loggedInUsers.includes(user.emailId) == false && currentuser != user">
-                        <i class="fa fa-circle"></i>
-                      </span>
-                      <span>{{user.firstName}} {{user.lastName}}
-                        <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
-                          {{channelstate.unreadMessageCount}}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-            </div>
-          </ul> -->
+        <div *ngIf="allUsers.length > 0">
           <ul class="list-group user-list">
             <div *ngFor="let user of allUsers" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
               <div *ngIf="currentuser != user && user.lastName !='Bot'">
-                <div *ngFor="let channelstate of channelStateObject">
+                <!-- <div *ngFor="let channelstate of channelStateObject">
 
                   <div *ngFor="let userlist of channelstate.listOfUsers">
-                    <div *ngIf="userlist == user.emailId">
+                    <div *ngIf="userlist == user.emailId"> -->
+
                       <li class="list-group-item user-list-item">
                         <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
                           <i class="fas fa-circle"></i>
@@ -134,18 +110,28 @@
                           <i class="fa fa-circle"></i>
                         </span>
                         <span>{{user.firstName}} {{user.lastName}}
-                          <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                          <!-- <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
                             {{channelstate.unreadMessageCount}}
-                          </span>
+                          </span> -->
+                          <span *ngFor="let channelstate of channelStateObject">
+                              <span *ngFor="let userlist of channelstate.listOfUsers">
+                                <span *ngIf="userlist == user.emailId">
+                                  <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                                    {{channelstate.unreadMessageCount}}
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
                         </span>
                       </li>
-                    </div>
+                    <!-- </div>
                   </div>
 
-                </div>
+                </div> -->
               </div>
             </div>
           </ul>
+
         </div>
       </div>
 
@@ -155,10 +141,9 @@
           <ul class="list-group user-list">
             <div *ngFor="let user of allUsers" (click)="getDirectMessageDetails(user)" [class.zero-height]="currentuser == user">
               <div *ngIf="user.lastName =='Bot'">
-                <div *ngFor="let channelstate of channelStateObject">
-
+                <!-- <div *ngFor="let channelstate of channelStateObject">
                   <div *ngFor="let userlist of channelstate.listOfUsers">
-                    <div *ngIf="userlist == user.emailId">
+                    <div *ngIf="userlist == user.emailId"> -->
                       <li class="list-group-item user-list-item">
                         <span class="online-icon" *ngIf="loggedInUsers.includes(user.emailId) == true && currentuser != user">
                           <i class="fas fa-circle"></i>
@@ -167,15 +152,24 @@
                           <i class="fa fa-circle"></i>
                         </span>
                         <span>{{user.firstName}} {{user.lastName}}
-                          <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                          <!-- <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
                             {{channelstate.unreadMessageCount}}
-                          </span>
+                          </span> -->
+                          <span *ngFor="let channelstate of channelStateObject">
+                              <span *ngFor="let userlist of channelstate.listOfUsers">
+                                <span *ngIf="userlist == user.emailId">
+                                  <span *ngIf="channelstate.unreadMessageCount > 0" class="notification_badge">
+                                    {{channelstate.unreadMessageCount}}
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
                         </span>
                       </li>
-                    </div>
+                    <!-- </div>
                   </div>
 
-                </div>
+                </div> -->
               </div>
             </div>
           </ul>
@@ -190,7 +184,7 @@
       <nav class="navbar navbar-default nav-fixed-top chat-navbar">
           <div id="toast">
             <mat-icon id="img">message</mat-icon>
-            <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">see messaage</a></div>
+            <div id="desc"> <a (click)="getSelectedChannelDetails(notigchannel)">{{toastmessage}} </a></div>
           </div>
         <div *ngIf="selectedchannel == 'defaultchannel'; else second;">
             <span>
@@ -300,12 +294,12 @@
         <button mat-button class="send-button" (click)="sendMessageInChannel()"> <mat-icon>send</mat-icon> </button>
       </form> -->
 
-      <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()">
+      <form class=" message-form-input bottom_wrapper clearfix" id="typing" (ngSubmit)="sendMessageInChannel()" id="message-form-input">
         <div class="message_input_wrapper">
           <span class="emoji-wrapper">
-              <span><a id="emoji_button" (click)="putEmoji()"><i class='em em---1'></i></a></span>
-              <span><a id="emoji_button" (click)="putEmoji()"><i class="em em-slightly_smiling_face"></i></a></span>
-              <span><a id="emoji_button" (click)="putEmoji()"><i class="em em-crossed_fingers"></i></a></span>
+              <span><a id="emoji_button" (click)="putEmoji1()"><i class='em em---1'></i></a></span>
+              <span><a id="emoji_button" (click)="putEmoji2()"><i class="em em-slightly_smiling_face"></i></a></span>
+              <span><a id="emoji_button" (click)="putEmoji3()"><i class="em em-crossed_fingers"></i></a></span>
           </span>
 
             <!-- <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart> -->

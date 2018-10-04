@@ -5,6 +5,8 @@ import { Channel } from '../Channel';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Location } from '@angular/common';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+
 @Component({
   selector: 'app-add-members-to-channel',
   templateUrl: './add-members-to-channel.component.html',
@@ -17,13 +19,28 @@ export class AddMembersToChannelComponent implements OnInit {
   currentWorkspace;
   channelSelected:Channel;
   userSelected:User[]=[];
+  public _hubConnection: HubConnection;
   constructor(
 
     private location: Location,
     private router: Router,
     private localStorage:LocalStorageService ,
     private chatService: ChatService
-  ) { }
+  ) {
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.238.230:5004/chat')
+    //   .build();
+
+      this._hubConnection = new HubConnectionBuilder()
+        .withUrl('http://13.233.42.222/chat-api/chat')
+        .build(); // aws
+
+    this._hubConnection
+      .start()
+      .then(() => {
+        console.log('Connection started!')
+      })
+  }
   ngOnInit() {
     //getting current user in context
     this.chatService.currentuser.subscribe(user => this.currentUser = user);
@@ -54,6 +71,13 @@ export class AddMembersToChannelComponent implements OnInit {
     for(let user of this.userSelected){
       console.log(user);
       this.chatService.addMemberToChannel(user, this.channelSelected.channelId).subscribe();
+      this._hubConnection
+     .invoke('AddChannelNotification', this.channelSelected.channelId, user)
+     .then(s => {
+       console.log("in AddLeaveChannelNotification invoke");
+       this.chatService.setUserAddedRemovedProperty("added");
+     })
+     .catch(err => console.error(err));
     }
     setTimeout(()=>this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token')}}),300);
   }

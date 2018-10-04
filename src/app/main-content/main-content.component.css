@@ -75,7 +75,7 @@
   padding-top: 15px
 }
 .notification_badge{
-  z-index: 40;
+  /* z-index: 40; */
   background: red;
   color: white;
   height: 20px;
@@ -111,7 +111,7 @@
   background-color: black;
   width: 100%;
   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
-  z-index: 1;
+  /* z-index: 1000000; */
 }
 .logout {
   color: white;
@@ -318,17 +318,29 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   .closeSidenavButton {
     display: none
   }
+
+  .message-form-input {
+    display: inline !important;
+  }
 }
 /* Landscape tablets and medium desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
   .closeSidenavButton {
     display: none
   }
+
+  .message-form-input {
+    display: inline !important;
+  }
 }
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
   .closeSidenavButton {
     display: none
+  }
+
+  .message-form-input {
+    display: inline !important;
   }
 }
 /* Landscape phones and portrait tablets */
@@ -395,7 +407,7 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
  }
  #toast {
   visibility: hidden;
-  max-width: 50px;
+  max-width: 80px;
   height: 50px;
   /*margin-left: -125px;*/
   margin: auto;
@@ -404,11 +416,12 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   text-align: center;
   border-radius: 2px;
   position: fixed;
-  z-index: 1;
+  z-index: 9999999;
   left: 0;right:0;
-  bottom: 30px;
+  bottom: 65px;
   font-size: 17px;
   white-space: nowrap;
+  margin-right: 0;
  }
  #toast #img{
  width: 50px;
@@ -426,7 +439,10 @@ div.sidebar-sub-container::-webkit-scrollbar-track {
   overflow: hidden;
  white-space: nowrap;
  }
-
+ #toast:hover {
+   cursor: pointer;
+   color: #E6AF2E
+ }
 
  /* hrishi footer css */
  * {
