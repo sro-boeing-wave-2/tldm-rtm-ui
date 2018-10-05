@@ -90,6 +90,13 @@ export class MainContentComponent implements OnInit {
       .catch(err => console.error(err));
   }
 
+  public notify() {
+    let audio = new Audio();
+    audio.src = "..src/assets/sounds/unconvinced.mp3";
+    audio.load();
+    audio.play();
+  }
+
   public sendMessageInChannel(): void {
     if (this.channelmessage != "") {
       this.messageObject.messageBody = this.channelmessage;
@@ -365,12 +372,7 @@ export class MainContentComponent implements OnInit {
     setTimeout(() => console.log(loadedMessages), 500);
   }
 
-  public notify() {
-    let audio = new Audio();
-    audio.src = "..src/assets/sounds/unconvinced.mp3";
-    audio.load();
-    audio.play();
-  }
+
 
   launch_toast(channelId: string, message: string) {
     this.toastmessage = message;
