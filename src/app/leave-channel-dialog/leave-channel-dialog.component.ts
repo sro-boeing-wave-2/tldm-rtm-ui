@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { ChatService } from '../chat.service';
 import { Channel } from '../Channel';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+// import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { User } from '../User';
 
 @Component({
@@ -15,7 +15,7 @@ export class LeaveChannelDialogComponent implements OnInit {
   channel: Channel;
   currentEmail: string;
   currentuser: User;
-  public _hubConnection: HubConnection;
+  // public _hubConnection: HubConnection;
   constructor(
 
     public thisDialogRef: MatDialogRef<LeaveChannelDialogComponent>,
@@ -27,16 +27,16 @@ export class LeaveChannelDialogComponent implements OnInit {
     //   .withUrl('http://172.23.238.230:5004/chat')
     //   .build();
 
-    this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://13.233.42.222/chat-api/chat')
-      .build(); // aws
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://13.233.42.222/chat-api/chat')
+    //   .build(); // aws
 
-      this._hubConnection
-      .start()
-      .then(() => {
-        console.log('Connection started!')
+    //   this._hubConnection
+    //   .start()
+    //   .then(() => {
+    //     console.log('Connection started!')
 
-      })
+    //   })
   }
 
   ngOnInit() {
@@ -52,12 +52,12 @@ export class LeaveChannelDialogComponent implements OnInit {
         var currentEmail = this.currentuser.emailId;
         this.chatservice.deleteUserFromChannel(channelid, currentEmail).subscribe();
         this.thisDialogRef.close('Confirm');
-        this._hubConnection
-          .invoke('LeaveChannelNotification', channelid, this.currentuser)
-          .then(s => {
-            this.chatservice.setUserAddedRemovedProperty("removed");
-          })
-          .catch(err => console.error(err));
+        // this._hubConnection
+        //   .invoke('LeaveChannelNotification', channelid, this.currentuser)
+        //   .then(s => {
+        //     this.chatservice.setUserAddedRemovedProperty("removed");
+        //   })
+        //   .catch(err => console.error(err));
 
   }
 

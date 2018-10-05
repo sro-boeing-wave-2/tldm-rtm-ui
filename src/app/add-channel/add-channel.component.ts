@@ -129,7 +129,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { Location } from '@angular/common';
 import { Connection } from '@angular/http';
 
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+// import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 @Component({
   selector: 'app-add-channel',
@@ -149,7 +149,7 @@ export class AddChannelComponent implements OnInit {
   channelForm: FormGroup;
   currentEmail;
   currentWorkspace;
-  public _hubConnection: HubConnection;
+  // public _hubConnection: HubConnection;
   public channelToCreate:Channel = {
     "channelId": "",
     "messages": [],
