@@ -27,7 +27,19 @@ export class AddMembersToChannelComponent implements OnInit {
     private localStorage: LocalStorageService,
     private chatService: ChatService
   ) {
+    // this._hubConnection = new HubConnectionBuilder()
+    //   .withUrl('http://172.23.238.230:5004/chat')
+    //   .build();
 
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl('http://13.233.42.222/chat-api/chat')
+      .build(); // aws
+
+    this._hubConnection
+      .start()
+      .then(() => {
+        console.log('Connection started!')
+      })
   }
   ngOnInit() {
     //getting current user in context
@@ -56,40 +68,21 @@ export class AddMembersToChannelComponent implements OnInit {
   }
 
   addMembersToChannel() {
+    for (let user of this.userSelected) {
+      console.log(user);
+      this.chatService.addMemberToChannel(user, this.channelSelected.channelId).subscribe();
+      this._hubConnection
+        .invoke('AddChannelNotification', this.channelSelected.channelId, user)
+        .then(s => {
+          console.log("in AddLeaveChannelNotification invoke");
+          this.chatService.setUserAddedRemovedProperty("added");
+        })
+        .catch(err => console.error(err));
 
-    // this._hubConnection = new HubConnectionBuilder()
-    //   .withUrl('http://172.23.238.230:5004/chat')
-    //   .build();
+    }
 
-    this._hubConnection = new HubConnectionBuilder()
-      .withUrl('http://13.233.42.222/chat-api/chat')
-      .build(); // aws
+    setTimeout(() => this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token') } }), 300);
 
-    this._hubConnection
-      .start()
-      .then(() => {
-        console.log('Connection started!')
-        for (let user of this.userSelected) {
-          console.log(user);
-          this.chatService.addMemberToChannel(user, this.channelSelected.channelId).subscribe();
-          this._hubConnection
-            .invoke('AddChannelNotification', this.channelSelected.channelId, user)
-            .then(s => {
-              console.log("in AddLeaveChannelNotification invoke");
-              this.chatService.setUserAddedRemovedProperty("added");
-            })
-            .catch(err => console.error(err));
-
-            if(user.lastName == "Bot"){
-              this._hubConnection.invoke('SendAllUserChannel', user.emailId)
-              .then(s => {console.log("in sendalluserchannel")})
-              .catch((err => console.error(err)))
-            }
-        }
-
-        setTimeout(() => this.router.navigate([''], { queryParams: { workspace: this.currentWorkspace, token: this.localStorage.retrieve('token') } }), 300);
-
-      })
 
   }
 }

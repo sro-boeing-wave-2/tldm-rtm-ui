@@ -224,7 +224,7 @@ export class MainContentComponent implements OnInit {
     });
 
     this._hubConnection.on('SendMessageInChannel', (username: string, receivedMessage: Message) => {
-      receivedMessage.timestamp = receivedMessage.timestamp.slice(11,16);
+
       if (receivedMessage.channelId == this.channelId) {
         this.channelmessages.push(receivedMessage);
       }
@@ -274,7 +274,7 @@ export class MainContentComponent implements OnInit {
           div.innerHTML = `<span>${this.Currentlytyping}</span>`;
           document.getElementById('typing').appendChild(div);
           div.style.position = 'absolute';
-          div.style.zIndex = "60";
+          div.style.zIndex = "6000000";
           div.style.paddingLeft = "10px"
         }, 0);
         setTimeout(() => {
@@ -319,7 +319,7 @@ export class MainContentComponent implements OnInit {
 
     this.channelName = channel.channelName;
     this.channelId = channel.channelId;
-    setInterval(() =>this.getNotificationCount(),1000);
+    setInterval(() =>this.getNotificationCount(),2000);
 
   }
 

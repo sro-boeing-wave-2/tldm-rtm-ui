@@ -23,14 +23,6 @@ export class LeaveChannelDialogComponent implements OnInit {
   ) {
 
 
-  }
-
-  ngOnInit() {
-    this.chatservice.currentuser.subscribe(user => this.currentuser = user);
-    this.chatservice.channelselected.subscribe(channel => this.channel = channel);
-  }
-
-  onCloseConfirm() {
     // this._hubConnection = new HubConnectionBuilder()
     //   .withUrl('http://172.23.238.230:5004/chat')
     //   .build();
@@ -39,11 +31,23 @@ export class LeaveChannelDialogComponent implements OnInit {
       .withUrl('http://13.233.42.222/chat-api/chat')
       .build(); // aws
 
-    this._hubConnection
+      this._hubConnection
       .start()
       .then(() => {
         console.log('Connection started!')
-        console.log(this.channel);
+
+      })
+  }
+
+  ngOnInit() {
+    this.chatservice.currentuser.subscribe(user => this.currentuser = user);
+    this.chatservice.channelselected.subscribe(channel => this.channel = channel);
+  }
+
+  onCloseConfirm() {
+
+
+      console.log(this.channel);
         var channelid = this.channel.channelId;
         var currentEmail = this.currentuser.emailId;
         this.chatservice.deleteUserFromChannel(channelid, currentEmail).subscribe();
@@ -54,7 +58,6 @@ export class LeaveChannelDialogComponent implements OnInit {
             this.chatservice.setUserAddedRemovedProperty("removed");
           })
           .catch(err => console.error(err));
-      })
 
   }
 
